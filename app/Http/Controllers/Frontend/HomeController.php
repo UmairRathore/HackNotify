@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Exception;
 use Twilio\Rest\Client;
+use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
@@ -106,7 +107,7 @@ class HomeController extends Controller
     }
 
 
-    public function searchphone(Request $request)
+    public function send_otp(Request $request)
     {
         $receiverNumber = "+" . $request->phone;
 
@@ -119,6 +120,7 @@ class HomeController extends Controller
                 'mobile_number' => $request->phone,
                 'otp_pin' => $pin,
             ]);
+
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
@@ -127,11 +129,27 @@ class HomeController extends Controller
             $client->messages->create($receiverNumber, [
                 'from' => $twilio_number,
                 'body' => $message]);
-
-            echo 'SMS Sent Successfully.';
+            return response()->json(['status' => true, 'message' => "OTP Sent Successfully."]);
 
         } catch (Exception $e) {
-            print_r("Error: " . $e->getMessage());
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function verify_otp()
+    {
+
+    }
+
+    public function searchphone(Request $request)
+    {
+
+        $phone = SearchBreach::where('phone', '=', $request->input('phone'))->get();
+
+        if ($phone->count()) {
+            return response()->json(['status' => 'found', 'count' => $phone->count()]);
+        } else {
+            return response()->json(['status' => 0, 'count' => 0]);
         }
     }
 

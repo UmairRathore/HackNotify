@@ -56,6 +56,9 @@ Route::get('show-user', [AjaxController::class, 'show']);
 Route::get('index', [HomeController::class, 'index'])->name('index');
 Route::post('searchemail', [HomeController::class, 'searchemail'])->name('searchemail');
 Route::post('searchphone', [HomeController::class, 'searchphone'])->name('searchphone');
+Route::post('send_otp', [HomeController::class, 'send_otp'])->name('send_otp');
+Route::post('verify_otp', [HomeController::class, 'verify_otp'])->name('verify_otp');
+
 Route::post('searchpass', [HomeController::class, 'searchpass'])->name('searchpass');
 Route::get('about', [AboutController::class, 'index'])->name('about');
 Route::get('donate', [DonateController::class, 'index'])->name('donate');

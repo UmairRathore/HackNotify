@@ -18,8 +18,8 @@
     <style>
 
         .tabs-wrapper {
-            box-shadow: 2px 1px 20px #f9f9f9;
-            border-radius: 0.5rem;
+            /*box-shadow: 2px 1px 20px #f9f9f9;*/
+            /*border-radius: 0.5rem;*/
         }
 
         ul {
