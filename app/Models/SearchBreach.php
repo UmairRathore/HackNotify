@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SearchBreach extends Model
 {
     use HasFactory;
+
     protected $table = "search_breaches";
     protected $fillable =
         [
@@ -18,5 +19,8 @@ class SearchBreach extends Model
 
         ];
 
-
+    public function companyData()
+    {
+        return $this->hasOne(Company::class, 'id','company_id');
+    }
 }

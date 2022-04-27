@@ -33,75 +33,14 @@ class HomeController extends Controller
 
     public function searchemail(Request $request)
     {
-        $email = SearchBreach::where('email', '=', $request->input('email'))->exists();
+        $email = SearchBreach::where('email', '=', $request->email)->get();
 
-        $show = Company::all();
-
-        if ($email == $request->email) {
-
-            $html = '<div>
-                    <div class="badNewsContainer ">
-                    <div class="row">
-                        <div class="mr-1">
-
-                        ';
-            $html .= '<img src=" ' .
-                asset('frontend/assets/images/badnews.ca3d9507.svg') .
-                '" alt="badnews">';
-
-            $html .= '</div>
-                        <div class="badNewsText">Bad news</div>
-                    </div>
-                    <div class="badNewsDesc">Your email address has been found in <span style="font-weight: 600;">1 data breach</span>.</div>
-                    <div class="badNewsList mt-4">
-                        <div>
-                            <div>
-                                <div class="badNewsListTitle">;
-
-
-                                    Blood Bank ';
-
-            $html .= '<img alt="verified" src=" '
-                . asset('frontend/assets/images/verified.78915310.svg') .
-                ' "style="height: 20px; width: 20px;"> ';
-
-
-            $html .= '         </div>
-
-
-                                <div class="badNewsInfo">
-                                    <div class="row zebraStrip rowPadding">
-                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Website</div>
-                                        <div class="badNewsNormalText col-md-9 col-sm-12">bloodbank.com</div>
-                                    </div>
-                                    <div class="row rowPadding">
-                                        <div class="badNewsNormalText bold col-md-3 col-sm-12 boldMobile">Types of data exposed</div>
-                                        <div class="badNewsNormalText col-md-9 col-sm-12">Phone Numbers, Passwords, Email Addresses</div>
-                                    </div>
-                                    <div class="row zebraStrip rowPadding">
-                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Details</div>
-                                        <div class="badNewsNormalText col-md-9 col-sm-12">In September 2015, the US-based credit bureau and consumer data broker Experian suffered a data breach that impacted 27 million customers.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>';
-
+        if ($email->count()) {
+            $record = SearchBreach::with('companyData')->where('email', '=', $request->email)->first();
+            return response()->json(['status' => true, 'message' => 'found', 'record' => $record,'count'=>$email->count()]);
         } else {
-
-            $html = '  <div class="noLeakContainer ">';
-            $html .= '<img src=" ' .
-                asset('frontend/assets/images/done.5255612b.svg') .
-                '" alt="done" class="noLeakImage">';
-
-            $html .= '   <p class="noLeakText">Looks like no leak has been found in the database</p>
-                </div> ';
-
+            return response()->json(['status' => false, 'message' => 'Not found']);
         }
-
-        echo $html;
 
 
     }
@@ -144,7 +83,6 @@ class HomeController extends Controller
                 return response()->json(['status' => true, 'message' => "ok"]);
             } else {
                 return response()->json(['status' => false, 'message' => "Otp not verified"]);
-
             }
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);

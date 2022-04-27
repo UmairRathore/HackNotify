@@ -99,28 +99,28 @@
         <!--        //bad news container according to api response hidden for now-->
         <div class="row">
             <div class="col-md-6">
-                <div class="badNewsContainer d-none">
+                <div class="badNewsContainer badNewsContainerEmail d-none">
                     <div class="row">
-                        <div class="mr-1"><img src="/static/media/badnews.ca3d9507.svg" alt="badnews"></div>
+                        <div class="mr-1"><img src="{{ asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
                         <div class="badNewsText">Bad news</div>
                     </div>
-                    <div class="badNewsDesc">Your email address has been found in <span style="font-weight: 600;">1 data breach</span>.</div>
+                    <div class="badNewsDesc">Your email address has been found in <span id="email_breaches" style="font-weight: 600;">1 data breach</span>.</div>
                     <div class="badNewsList mt-4">
                         <div>
                             <div>
-                                <div class="badNewsListTitle">Blood Bank <img alt="verified" src="/static/media/verified.78915310.svg" style="height: 20px; width: 20px;"></div>
+                                <div class="badNewsListTitle" ><span id="email_company">Blood Bank</span>> <img alt="verified" src="{{ asset('frontend/assets/images/verified.78915310.svg')}}" style="height: 20px; width: 20px;"></div>
                                 <div class="badNewsInfo">
                                     <div class="row zebraStrip rowPadding">
                                         <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Website</div>
-                                        <div class="badNewsNormalText col-md-9 col-sm-12">bloodbank.com</div>
+                                        <div class="badNewsNormalText col-md-9 col-sm-12" id="email_website">bloodbank.com</div>
                                     </div>
                                     <div class="row rowPadding">
                                         <div class="badNewsNormalText bold col-md-3 col-sm-12 boldMobile">Types of data exposed</div>
                                         <div class="badNewsNormalText col-md-9 col-sm-12">Phone Numbers, Passwords, Email Addresses</div>
                                     </div>
                                     <div class="row zebraStrip rowPadding">
-                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Details</div>
-                                        <div class="badNewsNormalText col-md-9 col-sm-12">In September 2015, the US-based credit bureau and consumer data broker Experian suffered a data breach that impacted 27 million customers.</div>
+                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile" >Details</div>
+                                        <div class="badNewsNormalText col-md-9 col-sm-12" id="email_detail">In September 2015, the US-based credit bureau and consumer data broker Experian suffered a data breach that impacted 27 million customers.</div>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                     <div class="badNewsDesc">Your number has been found in <span id="phone_breaches_found"></span> data breaches. To see details verify that this phone number belongs to you. In order to do so, Hacknotify.com will a verification code on the phone number you just search for.</div>
                     <button class="badNewsButton" id="getVerificationCode">Get a verification code</button>
                 </div>
-                <div class="noLeakContainer d-none"><img alt="done" src="/static/media/done.5255612b.svg" class="noLeakImage">
+                <div class="noLeakContainer d-none"><img alt="done" src="{{asset('frontend/assets/images/done.5255612b.svg')}}" class="noLeakImage">
                     <p class="noLeakText">Looks like no leak has been found in the database</p>
                 </div>
 
@@ -228,19 +228,21 @@
                         // access_token: $("#access_token").val()
                     },
                     success: function (result) {
-                        // alert(result);
 
-                        // $("#msg").html(result);
-                        document.getElementById("msg").innerHTML = result;
-                        // alert('ok');
-                        // if(result == 1)
-                        // {
-                        //
-                        // }
-                        // else
-                        // {
-                        //
-                        // }
+                        if (result.status==true) {
+
+                            $("#email_breaches").html(result.count+' data breaches');
+                            $("#email_company").html(result.record.company_data.name);
+                            $("#email_website").html(result.record.company_data.website);
+                            $("#email_detail").html(result.record.company_data.detail);
+                            $(".badNewsContainerEmail").removeClass('d-none');
+                            $('.noLeakContainer').addClass('d-none');
+
+                        } else {
+                            $('.noLeakContainer').removeClass('d-none');
+                            $(".badNewsContainerEmail").addClass('d-none');
+                        }
+
                     },
                     error: function (result) {
                         alert('error');
