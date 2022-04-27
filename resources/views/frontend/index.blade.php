@@ -297,6 +297,8 @@
                         if (result.status) {
                             $("#phone_div").hide();
                             $("#otp_verify_div").show();
+                            $(".badNewsContainerPhone").addClass('d-none');
+                            $(".noLeakContainer").addClass('d-none');
                         } else {
                             alert(result.message);
                         }
@@ -307,6 +309,7 @@
                     }
                 });
             });
+
         });
 
         $(document).ready(function () {
