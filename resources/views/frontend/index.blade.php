@@ -255,6 +255,8 @@
 
         $(document).ready(function () {
             $("#searchphoneimg").click(function (e) {
+                $(".badNewsContainerEmail").addClass('d-none');
+
                 // alert('hello');
                 let phone = document.getElementById("phone").value;
                 // alert(email);
