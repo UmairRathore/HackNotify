@@ -309,6 +309,37 @@
                     }
                 });
             });
+            $("#verifyOtpImg").click(function (e) {
+                // alert('hello');
+                let phone = document.getElementById("phone").value;
+                let otp_pin = document.getElementById("otp_pin").value;
+                // alert(email);
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "{{route('verify_otp')}}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        phone: phone,
+                        otp_pin: otp_pin,
+                    },
+                    success: function (result) {
+                        if (result.status) {
+                            //
+                            // $("#phone_div").hide();
+                            // $("#otp_verify_div").show();
+                            // $(".badNewsContainerPhone").addClass('d-none');
+                            // $(".noLeakContainer").addClass('d-none');
+                        } else {
+                            alert(result.message);
+                        }
+                        // document.getElementById("msg").innerHTML = result;
+                    },
+                    error: function (result) {
+                        alert('error');
+                    }
+                });
+            });
 
         });
 

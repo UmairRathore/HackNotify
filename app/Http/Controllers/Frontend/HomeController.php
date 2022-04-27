@@ -115,9 +115,9 @@ class HomeController extends Controller
         try {
             $pin = mt_rand(1000, 9999);
             OtpVerification::updateOrCreate([
-                'mobile_number' => $request->phone,
+                'phone' => $request->phone,
             ], [
-                'mobile_number' => $request->phone,
+                'phone' => $request->phone,
                 'otp_pin' => $pin,
             ]);
 
