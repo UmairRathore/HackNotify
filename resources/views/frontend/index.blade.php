@@ -104,11 +104,11 @@
                         <div class="mr-1"><img src="{{ asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
                         <div class="badNewsText">Bad news</div>
                     </div>
-                    <div class="badNewsDesc">Your email address has been found in <span id="email_breaches" style="font-weight: 600;">1 data breach</span>.</div>
+                    <div class="badNewsDesc">Your <span id="search_type">email address</span> has been found in <span id="email_breaches" style="font-weight: 600;">1 data breach</span>.</div>
                     <div class="badNewsList mt-4">
                         <div>
                             <div>
-                                <div class="badNewsListTitle" ><span id="email_company">Blood Bank</span> <img alt="verified" src="{{ asset('frontend/assets/images/verified.78915310.svg')}}" style="height: 20px; width: 20px;"></div>
+                                <div class="badNewsListTitle"><span id="email_company">Blood Bank</span> <img alt="verified" src="{{ asset('frontend/assets/images/verified.78915310.svg')}}" style="height: 20px; width: 20px;"></div>
                                 <div class="badNewsInfo">
                                     <div class="row zebraStrip rowPadding">
                                         <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Website</div>
@@ -119,7 +119,7 @@
                                         <div class="badNewsNormalText col-md-9 col-sm-12">Phone Numbers, Passwords, Email Addresses</div>
                                     </div>
                                     <div class="row zebraStrip rowPadding">
-                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile" >Details</div>
+                                        <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Details</div>
                                         <div class="badNewsNormalText col-md-9 col-sm-12" id="email_detail">In September 2015, the US-based credit bureau and consumer data broker Experian suffered a data breach that impacted 27 million customers.</div>
                                     </div>
                                 </div>
@@ -229,9 +229,9 @@
                     },
                     success: function (result) {
 
-                        if (result.status==true) {
-
-                            $("#email_breaches").html(result.count+' data breaches');
+                        if (result.status == true) {
+                            $("#search_type").html('email address');
+                            $("#email_breaches").html(result.count + ' data breaches');
                             $("#email_company").html(result.record.company_data.name);
                             $("#email_website").html(result.record.company_data.website);
                             $("#email_detail").html(result.record.company_data.detail);
@@ -326,15 +326,16 @@
                         otp_pin: otp_pin,
                     },
                     success: function (result) {
-                        if (result.status==true) {
+                        if (result.status == true) {
+                            $("#search_type").html('phone number');
 
-                            $("#email_breaches").html(result.count+' data breaches');
+                            $("#email_breaches").html(result.count + ' data breaches');
                             $("#email_company").html(result.record.company_data.name);
                             $("#email_website").html(result.record.company_data.website);
                             $("#email_detail").html(result.record.company_data.detail);
                             $(".badNewsContainerEmail").removeClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
-                            $('.verify_otp_message').hide;
+                            $('.verify_otp_message').hide();
 
 
                         } else {
@@ -367,9 +368,9 @@
                         // access_token: $("#access_token").val()
                     },
                     success: function (result) {
-                        if (result.status==true) {
+                        if (result.status == true) {
 
-                            $("#email_breaches").html(result.count+' data breaches');
+                            $("#email_breaches").html(result.count + ' data breaches');
                             $("#email_company").html(result.record.company_data.name);
                             $("#email_website").html(result.record.company_data.website);
                             $("#email_detail").html(result.record.company_data.detail);
