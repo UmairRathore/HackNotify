@@ -214,6 +214,7 @@
 
         $(document).ready(function () {
             $("#searchemailimg").click(function (e) {
+                $(".badNewsContainerEmail").addClass('d-none');
                 // alert('hello');
                 let email = document.getElementById("email").value;
                 // alert(email);
@@ -313,6 +314,7 @@
             });
             $("#verifyOtpImg").click(function (e) {
                 // alert('hello');
+                $(".badNewsContainerEmail").addClass('d-none');
                 let phone = document.getElementById("phone").value;
                 let otp_pin = document.getElementById("otp_pin").value;
                 // alert(email);
