@@ -136,8 +136,19 @@ class HomeController extends Controller
         }
     }
 
-    public function verify_otp()
+    public function verify_otp(Request $request)
     {
+        try {
+            $verified = OtpVerification::where(['phone' => $request->phone, 'otp_pin' => $request->otp_pin])->first();
+            if ($verified) {
+                return response()->json(['status' => true, 'message' => "ok"]);
+            } else {
+                return response()->json(['status' => false, 'message' => "Otp not verified"]);
+
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
 
     }
 
