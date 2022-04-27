@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DataProtectionHeading;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DataProtectionHeadingController extends Controller
 {
@@ -70,10 +71,18 @@ class DataProtectionHeadingController extends Controller
         $dataprotection = new DataProtectionHeading();
         $dataprotection->title=$request->input('title');
         $dataprotection->paragraph=$request->input('paragraph');
-        $dataprotection->save();
+        $check = $dataprotection->save();
 
-        return back();
-
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 
@@ -95,17 +104,34 @@ class DataProtectionHeadingController extends Controller
         $dataprotection = $this->_model::find($id);
         $dataprotection->title=$request->input('title');
         $dataprotection->paragraph=$request->input('paragraph');
-        $dataprotection->update();
+        $check =  $dataprotection->update();
 
-        return back();
-
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
     public function destroy($id) {
 
         $dataprotection = $this->_model::find($id);
-        $dataprotection->delete();
-        return back();
+        $check = $dataprotection->delete();
+            if ($check) {
+                $msg = 'Record deleted successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-success');
+            } else {
+                $msg = 'Record not deleted successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-danger');
+            }
+        return redirect()->back();
 
     }
 }

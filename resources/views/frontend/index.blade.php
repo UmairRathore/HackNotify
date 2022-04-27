@@ -61,7 +61,7 @@
                                             <input type="text" id="otp_pin" name="otp_pin" placeholder="OTP" class="mainButtonText" value="">
                                             <img id="verifyOtpImg" alt="verify otp" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
                                         </div>
-                                        <div class="row col-md-9">
+                                        <div id="verify_otp_message" class="row col-md-9">
                                             <span class="my-2 text-success">
                                                 We have sent you otp on your phone number. Please verify to see the result.
                                             </span>
@@ -334,6 +334,8 @@
                             $("#email_detail").html(result.record.company_data.detail);
                             $(".badNewsContainerEmail").removeClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
+                            $('.verify_otp_message').hide;
+
 
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
@@ -365,19 +367,19 @@
                         // access_token: $("#access_token").val()
                     },
                     success: function (result) {
-                        // alert(result);
+                        if (result.status==true) {
 
-                        // $("#msg").html(result);
-                        document.getElementById("msg").innerHTML = result;
-                        // alert('ok');
-                        // if(result == 1)
-                        // {
-                        //
-                        // }
-                        // else
-                        // {
-                        //
-                        // }
+                            $("#email_breaches").html(result.count+' data breaches');
+                            $("#email_company").html(result.record.company_data.name);
+                            $("#email_website").html(result.record.company_data.website);
+                            $("#email_detail").html(result.record.company_data.detail);
+                            $(".badNewsContainerEmail").removeClass('d-none');
+                            $('.noLeakContainer').addClass('d-none');
+
+                        } else {
+                            $('.noLeakContainer').removeClass('d-none');
+                            $(".badNewsContainerEmail").addClass('d-none');
+                        }
                     },
                     error: function (result) {
                         alert('error');

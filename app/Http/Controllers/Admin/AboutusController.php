@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\About;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AboutusController extends Controller
 {
@@ -52,9 +53,18 @@ class AboutusController extends Controller
         $Aboutus = new About();
         $Aboutus->questions=$request->input('questions');
         $Aboutus->answers=$request->input('answers');
-        $Aboutus->save();
+        $check = $Aboutus->save();
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
-        return back();
 
 
     }
@@ -76,17 +86,36 @@ class AboutusController extends Controller
         $Aboutus =$this->_model::find($id);
         $Aboutus->questions=$request->input('questions');
         $Aboutus->answers=$request->input('answers');
-        $Aboutus->update();
+        $check = $Aboutus->update();
 
-        return back();
+
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 
     public function destroy($id) {
 
         $Aboutus = $this->_model::find($id);
-        $Aboutus->delete();
-        return back();
+        $check = $Aboutus->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 

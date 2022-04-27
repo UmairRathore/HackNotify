@@ -11,11 +11,11 @@
                 </a>
             </li>
 
-            <li class="menu-item">
-                <a href="{{route('indian-blood-donors-list')}}" class="has-chevron" data-bs-toggle="collapse" data-bs-target="#user" aria-expanded="false" aria-controls="user">
-                    <span><i class="ti ti-notepad"></i>Indian Blood Donors</span>
-                </a>
-            </li>
+{{--            <li class="menu-item">--}}
+{{--                <a href="{{route('indian-blood-donors-list')}}" class="has-chevron" data-bs-toggle="collapse" data-bs-target="#user" aria-expanded="false" aria-controls="user">--}}
+{{--                    <span><i class="ti ti-notepad"></i>Indian Blood Donors</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             <li class="menu-item">
                 <a href="#" class="has-chevron" data-bs-toggle="collapse" data-bs-target="#company" aria-expanded="false" aria-controls="company">

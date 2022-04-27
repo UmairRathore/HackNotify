@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PaymentMethodController extends Controller
 {
@@ -80,9 +81,17 @@ class PaymentMethodController extends Controller
             $paymentmethod->currency_image = 'default-image.png';
         }
 
-        $paymentmethod->save();
-        return back()->with('info_created', 'New specialization has been added Successfully!');
-    }
+        $check =  $paymentmethod->save();
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 
 
 //Payment-Method Edit
@@ -125,8 +134,17 @@ class PaymentMethodController extends Controller
         }
 
         //for update in table
-        $paymentmethod->update();
-        return back()->with('info_updated', 'Member Info has been updated successfuly!');
+        $check = $paymentmethod->update();
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
 
@@ -141,7 +159,16 @@ class PaymentMethodController extends Controller
         if (File::exists($destination)) {
             File::delete($destination);
         }
-        $paymentmethod->delete();
-        return back()->with('info_deleted', 'specialization Info has been deleted successfully!');
+        $check = $paymentmethod->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 }

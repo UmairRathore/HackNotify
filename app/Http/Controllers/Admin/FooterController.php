@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Footer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FooterController extends Controller
 {
@@ -68,9 +69,18 @@ class FooterController extends Controller
 
         $footer = $this->_model;
         $footer->paragraph=$request->input('paragraph');
-        $footer->save();
+        $check = $footer->save();
 
-        return back();
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
 
     }
@@ -92,17 +102,34 @@ class FooterController extends Controller
 
         $footer =$this->_model::find($id);
         $footer->paragraph=$request->input('paragraph');
-        $footer->update();
+        $check = $footer->update();
 
-        return back();
-
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
     public function destroy($id) {
 
         $footer = $this->_model::find($id);
-        $footer->delete();
-        return back();
+        $check = $footer->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 }

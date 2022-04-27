@@ -40,9 +40,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('backend.index');
-});
 
 
 Route::get('list', [AjaxController::class, 'index']);
@@ -53,7 +50,7 @@ Route::get('show-user', [AjaxController::class, 'show']);
 
 
 
-Route::get('index', [HomeController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::post('searchemail', [HomeController::class, 'searchemail'])->name('searchemail');
 Route::post('searchphone', [HomeController::class, 'searchphone'])->name('searchphone');
 Route::post('send_otp', [HomeController::class, 'send_otp'])->name('send_otp');
@@ -66,6 +63,16 @@ Route::get('data-protection', [DataProtectionController::class, 'index'])->name(
 //Route::post('subscribe', [NewsletterSubscriberController::class, 'subscribe'])->name('subscribe');
 
 
+
+Auth::routes();
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+//Auth
+Route::middleware(['auth'])->group(function () {
+
+
+    Route::get('/admin', [\App\Http\Controllers\HomeController::class, 'index']);
 
 
 //User
@@ -219,6 +226,7 @@ Route::PUT('update-gdprcompliance/{id}', [GdprComplianceController::class, 'upda
 Route::get('delete-gdprcompliance/{id}', [GdprComplianceController::class, 'destroy'])->name('delete-gdprcompliance');
 //});
 
+});
 
 
 

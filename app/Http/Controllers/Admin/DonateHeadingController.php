@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DonateHeading;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DonateHeadingController extends Controller
 {
@@ -70,10 +71,18 @@ class DonateHeadingController extends Controller
         $donate =$this->_model;
         $donate->title=$request->input('title');
         $donate->paragraph=$request->input('paragraph');
-        $donate->save();
+        $check = $donate->save();
 
-        return back();
-
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 
@@ -95,17 +104,36 @@ class DonateHeadingController extends Controller
         $donate =$this->_model::find($id);
         $donate->title=$request->input('title');
         $donate->paragraph=$request->input('paragraph');
-        $donate->update();
+        $check = $donate->update();
 
-        return back();
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 
     public function destroy($id) {
 
         $donate = $this->_model::find($id);
-        $donate->delete();
-        return back();
+        $check = $donate->delete();
+
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
     }
 }

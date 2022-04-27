@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -64,9 +65,18 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->password);
-        $user->save();
+        $check = $user->save();
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
-        return back()->with('info_created', 'New Member has been added Successfully!');
     }
 
 
@@ -109,7 +119,17 @@ class UserController extends Controller
         }
 
         $user =  $this->_model::find($id);
-        $user->update($input);
+        $check = $user->update($input);
+        if ($check) {
+            $msg = 'Record updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
 
         return redirect()->back()->withInput()->with('info_updated', 'Member Info has been updated successfuly!');
@@ -120,8 +140,16 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user =  $this->_model::find($id);
-        $user->delete();
-        return back()->with('info_deleted', 'User Info has been deleted successfully!');
-    }
+        $check = $user->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 
 }

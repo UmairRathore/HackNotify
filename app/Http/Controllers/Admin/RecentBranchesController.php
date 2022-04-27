@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecentBranches;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 
 class RecentBranchesController extends Controller
 {
@@ -126,9 +127,17 @@ class RecentBranchesController extends Controller
         }
 
         //for update in table
-        $recentbranches->update();
-        return back()->with('info_updated', 'Member Info has been updated successfuly!');
-    }
+        $check =  $recentbranches->update();
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 
 
     //Recent Branches Delete
@@ -142,7 +151,15 @@ class RecentBranchesController extends Controller
         if (File::exists($destination)) {
             File::delete($destination);
         }
-        $recentbranches->delete();
-        return back()->with('info_deleted', 'specialization Info has been deleted successfully!');
-    }
+        $check = $recentbranches->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 }

@@ -8,6 +8,7 @@ use App\Imports\SearchBreachImport;
 use App\Models\Company;
 use App\Models\SearchBreach;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SearchBreachController extends Controller
@@ -54,13 +55,21 @@ class SearchBreachController extends Controller
 //        ]);
 //        $company_id = new CompanyImport($company_id);
 //        $company_id = $request->company_id;
-        Excel::import(new SearchBreachImport(), $request->file('file'));
+        $check =  Excel::import(new SearchBreachImport(), $request->file('file'));
 
 //        $searchbreach->save();
 
 
-        return back();
-
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
 
@@ -86,15 +95,32 @@ class SearchBreachController extends Controller
         $searchbreach->phone = $request->phone;
         $searchbreach->email = $request->email;
         $searchbreach->password = $request->password;
-        $searchbreach->update();
+        $check =  $searchbreach->update();
 
-        return back();
-    }
+        if ($check) {
+            $msg = 'Record Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 
     public function destroy($id)
     {
         $searchbreach = $this->_model::find($id);
-        $searchbreach->delete();
-        return back();
+        $check = $searchbreach->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 }

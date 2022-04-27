@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Imports\CompanyImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\Console\Input\Input;
 
@@ -108,10 +109,18 @@ class CompanyController extends Controller
 //
 //        }
 
-        Excel::import(new CompanyImport(),$request->file('file'));
+        $check =  Excel::import(new CompanyImport(),$request->file('file'));
 
-//        return back();
-    }
+        if ($check) {
+            $msg = 'CSV imported successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not imported successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();    }
 
 
     public function edit($id)

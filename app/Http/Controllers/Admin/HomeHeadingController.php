@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\HomeHeading;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HomeHeadingController extends Controller
 {
@@ -92,17 +93,35 @@ class HomeHeadingController extends Controller
 
             $homeheading =$this->_model::find($id);
             $homeheading->paragraph=$request->input('paragraph');
-            $homeheading->update();
+            $check = $homeheading->update();
+            if ($check) {
+                $msg = 'Record Updated successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-success');
+            } else {
+                $msg = 'Record not updated successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-danger');
+            }
 
-            return back();
+            return redirect()->back();
 
         }
 
         public function destroy($id) {
 
             $homeheading = $this->_model::find($id);
-            $homeheading->delete();
-            return back();
+            $check = $homeheading->delete();
+            if ($check) {
+                $msg = 'Record deleted successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-success');
+            } else {
+                $msg = 'Record not deleted successfully';
+                Session::flash('msg', $msg);
+                Session::flash('message', 'alert-danger');
+            }
+            return redirect()->back();
 
         }
 }
