@@ -79,10 +79,12 @@ class HomeController extends Controller
     {
         try {
             $verified = OtpVerification::where(['phone' => $request->phone, 'otp_pin' => $request->otp_pin])->first();
+
             if ($verified) {
-                return response()->json(['status' => true, 'message' => "ok"]);
-            } else {
-                return response()->json(['status' => false, 'message' => "Otp not verified"]);
+                $phone = SearchBreach::where('phone', '=', $request->phone)->get();
+
+                $record = SearchBreach::with('companyData')->where('phone', '=', $request->phone)->first();
+                return response()->json(['status' => true, 'message' => 'found', 'record' => $record,'count'=>$phone->count()]);            } else {
             }
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);

@@ -108,7 +108,7 @@
                     <div class="badNewsList mt-4">
                         <div>
                             <div>
-                                <div class="badNewsListTitle" ><span id="email_company">Blood Bank</span>> <img alt="verified" src="{{ asset('frontend/assets/images/verified.78915310.svg')}}" style="height: 20px; width: 20px;"></div>
+                                <div class="badNewsListTitle" ><span id="email_company">Blood Bank</span> <img alt="verified" src="{{ asset('frontend/assets/images/verified.78915310.svg')}}" style="height: 20px; width: 20px;"></div>
                                 <div class="badNewsInfo">
                                     <div class="row zebraStrip rowPadding">
                                         <div class="badNewsNormalText col-md-3 col-sm-12 boldMobile">Website</div>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="badNewsContainer badNewsContainerPhone d-none">
                     <div class="row">
-                        <div class="mr-1"><img src="/static/media/badnews.ca3d9507.svg" alt="badnews"></div>
+                        <div class="mr-1"><img src="{{asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
                         <div class="badNewsText">Bad news</div>
                     </div>
                     <div class="badNewsDesc">Your number has been found in <span id="phone_breaches_found"></span> data breaches. To see details verify that this phone number belongs to you. In order to do so, Hacknotify.com will a verification code on the phone number you just search for.</div>
@@ -326,14 +326,18 @@
                         otp_pin: otp_pin,
                     },
                     success: function (result) {
-                        if (result.status) {
-                            //
-                            // $("#phone_div").hide();
-                            // $("#otp_verify_div").show();
-                            // $(".badNewsContainerPhone").addClass('d-none');
-                            // $(".noLeakContainer").addClass('d-none');
+                        if (result.status==true) {
+
+                            $("#email_breaches").html(result.count+' data breaches');
+                            $("#email_company").html(result.record.company_data.name);
+                            $("#email_website").html(result.record.company_data.website);
+                            $("#email_detail").html(result.record.company_data.detail);
+                            $(".badNewsContainerEmail").removeClass('d-none');
+                            $('.noLeakContainer').addClass('d-none');
+
                         } else {
-                            alert(result.message);
+                            $('.noLeakContainer').removeClass('d-none');
+                            $(".badNewsContainerEmail").addClass('d-none');
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },
