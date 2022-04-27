@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Footer;
 use App\Models\HomeHeading;
 use App\Models\IndianBloodDonors;
+use App\Models\OtpVerification;
 use App\Models\RecentBranches;
 use App\Models\SearchBreach;
 use Illuminate\Http\Request;
@@ -31,33 +32,12 @@ class HomeController extends Controller
 
     public function searchemail(Request $request)
     {
-//        dd('ho');
-//        $find = indianBloodDonors::all();
-
-//        $find->email=$request->input('email');
         $email = SearchBreach::where('email', '=', $request->input('email'))->exists();
 
-//        dd($email);
-
         $show = Company::all();
-//        dd($email);
 
-
-//
-//        if($email)
-//        {
-//            return view('frontend.badnews','email');
-//        }
-//        else
-//        {
-//            return view('frontend.goodnews','email');
-//        }
-
-//        $img1 = '<img src="';
-//        $img1 .= " {{('frontend/assets/static/media/badnews.ca3d9507.svg')}}";
-//        $img1 .= '" alt="badnews">';
         if ($email == $request->email) {
-//dd($email);
+
             $html = '<div>
                     <div class="badNewsContainer ">
                     <div class="row">
@@ -83,11 +63,6 @@ class HomeController extends Controller
             $html .= '<img alt="verified" src=" '
                 . asset('frontend/assets/images/verified.78915310.svg') .
                 ' "style="height: 20px; width: 20px;"> ';
-//                                <img alt="verified" src="
-//
-//                                url(frontend/assets/static/media/verified.78915310.svg)"
-//
-//                                style="height: 20px; width: 20px;">
 
 
             $html .= '         </div>
@@ -112,11 +87,6 @@ class HomeController extends Controller
                     </div>
                 </div>
                 </div>';
-//        $html .= "<h2> ITS IS FOUND </h2>";
-
-
-//        return 1;
-//        echo "y";
 
         } else {
 
@@ -128,50 +98,41 @@ class HomeController extends Controller
             $html .= '   <p class="noLeakText">Looks like no leak has been found in the database</p>
                 </div> ';
 
-//        $html = "<h1> NOT FOUND  </h1>";
-//        return 0;
-//        echo "not x";
         }
 
         echo $html;
 
-//        if ($email == null){
-//            echo("Email not exists");
-//        } else {
-//            echo("Email  exists");
-//        }
-//        $heading = HomeHeading::all();
-//        $recentbranches= RecentBranches::all();
-//        $footer = Footer::all();
-//        $cards = Cards::all();
 
-//        return view('frontend.index',compact('email','recentbranches','heading','cards','footer'));
     }
 
 
     public function searchphone(Request $request)
     {
-        $receiverNumber = "923312739119";
-        $message = "This is testing from ItSolutionStuff.com";
+        $receiverNumber = "+" . $request->phone;
+
 
         try {
-
+            $pin = mt_rand(1000, 9999);
+            OtpVerification::updateOrCreate([
+                'mobile_number' => $request->phone,
+            ], [
+                'mobile_number' => $request->phone,
+                'otp_pin' => $pin,
+            ]);
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
-
+            $message = "Your one time pin is $pin. Please verify your identity";
             $client = new Client($account_sid, $auth_token);
             $client->messages->create($receiverNumber, [
                 'from' => $twilio_number,
                 'body' => $message]);
 
-            dd('SMS Sent Successfully.');
+            echo 'SMS Sent Successfully.';
 
         } catch (Exception $e) {
-            dd("Error: " . $e->getMessage());
+            print_r("Error: " . $e->getMessage());
         }
-        $phone = SearchBreach::where('phone', '=', $request->input('phone'))->exists();
-
     }
 
 
