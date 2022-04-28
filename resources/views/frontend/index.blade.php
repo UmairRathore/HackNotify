@@ -49,6 +49,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <div class="tab-panel" id="tabs-profile3" role="tabpanel">
                                     <div id="phone_div">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
@@ -56,19 +59,22 @@
                                             <img id="searchphoneimg" alt="searchInactive" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
                                         </div>
                                     </div>
+
                                     <div id="otp_verify_div" style="display: none">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
                                             <input type="text" id="otp_pin" name="otp_pin" placeholder="OTP" class="mainButtonText" value="">
                                             <img id="verifyOtpImg" alt="verify otp" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
                                         </div>
+
                                         <div id="verify_otp_message" class="row col-md-9">
                                             <span class="my-2 text-success">
                                                 We have sent you otp on your phone number. Please verify to see the result.
                                             </span>
                                         </div>
                                     </div>
-
                                 </div>
+
+
 
                                 <div class="tab-panel" id="tabs-messages3" role="tabpanel">
                                     <div>
@@ -135,8 +141,6 @@
                     <div class="badNewsDesc">Your number has been found in <span id="phone_breaches_found"></span> data breaches. To see details verify that this phone number belongs to you. In order to do so, Hacknotify.com will a verification code on the phone number you just search for.</div>
                     <button class="badNewsButton" id="getVerificationCode">Get a verification code</button>
                 </div>
-
-
                 <div class="noLeakContainer d-none"><img alt="done" src="{{asset('frontend/assets/images/done.5255612b.svg')}}" class="noLeakImage">
                     <p class="noLeakText">Looks like no leak has been found in the database</p>
                 </div>
@@ -273,49 +277,26 @@
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: "{{route('searchphone')}}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        phone: phone,
-                    },
-                    success: function (result) {
-                        if (result.status == 'found') {
-                            $("#phone_breaches_found").html(result.count);
-                            $(".badNewsContainerPhone").removeClass('d-none');
-                            $(".noLeakContainer").addClass('d-none');
-                        } else {
-                            $(".noLeakContainer").removeClass('d-none');
-                            $(".badNewsContainerPhone").addClass('d-none');
-
-                        }
-                        // document.getElementById("msg").innerHTML = result;
-                    },
-                    error: function (result) {
-                        alert('error');
-                    }
-                });
-            });
-
-            $("#getVerificationCode").click(function (e) {
-                // alert('hello');
-                let phone = document.getElementById("phone").value;
-                // alert(email);
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
                     url: "{{route('send_otp')}}",
                     data: {
                         "_token": "{{ csrf_token() }}",
                         phone: phone,
                     },
                     success: function (result) {
-                        if (result.status) {
+                        if (result.status == 'found') {
+
+                            // $("#phone_breaches_found").html(result.count);
+                            // $(".badNewsContainerPhone").removeClass('d-none');
+                            // $(".noLeakContainer").addClass('d-none');
+
                             $("#phone_div").hide();
-                            $("#otp_verify_div").show();
+                            $("#verify_otp_message").show();
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
                         } else {
                             alert(result.message);
+
+
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },
@@ -324,6 +305,35 @@
                     }
                 });
             });
+
+            {{--$("#getVerificationCode").click(function (e) {--}}
+            {{--    // alert('hello');--}}
+            {{--    let phone = document.getElementById("phone").value;--}}
+            {{--    // alert(email);--}}
+            {{--    e.preventDefault();--}}
+            {{--    $.ajax({--}}
+            {{--        type: "POST",--}}
+            {{--        url: "{{route('send_otp')}}",--}}
+            {{--        data: {--}}
+            {{--            "_token": "{{ csrf_token() }}",--}}
+            {{--            phone: phone,--}}
+            {{--        },--}}
+            {{--        success: function (result) {--}}
+            {{--            if (result.status) {--}}
+            {{--                $("#phone_div").hide();--}}
+            {{--                $("#verify_otp_message").show();--}}
+            {{--                $(".badNewsContainerPhone").addClass('d-none');--}}
+            {{--                $(".noLeakContainer").addClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                alert(result.message);--}}
+            {{--            }--}}
+            {{--            // document.getElementById("msg").innerHTML = result;--}}
+            {{--        },--}}
+            {{--        error: function (result) {--}}
+            {{--            alert('error');--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--});--}}
             $("#verifyOtpImg").click(function (e) {
                 // alert('hello');
                 $(".badNewsContainerEmail").addClass('d-none');

@@ -11,5 +11,5 @@ class OtpVerification extends Model
 
     protected $table = 'otp_verifications';
 
-    protected $fillable = ['mobile_number', 'otp_pin',];
+    protected $fillable = ['phone', 'otp_pin',];
 }
