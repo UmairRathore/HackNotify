@@ -71,6 +71,12 @@
                                                 We have sent you otp on your phone number. Please verify to see the result.
                                             </span>
                                         </div>
+
+                                        <div id="enter_correct_otp_" class="row col-md-9">
+                                        <span class="my-2 text-success">
+                                                The Otp entered is incorrect.
+                                            </span>
+                                    </div>
                                     </div>
                                 </div>
 
@@ -283,17 +289,19 @@
                         phone: phone,
                     },
                     success: function (result) {
-                        if (result.status == 'found') {
+                        if (result.status) {
 
                             // $("#phone_breaches_found").html(result.count);
                             // $(".badNewsContainerPhone").removeClass('d-none');
                             // $(".noLeakContainer").addClass('d-none');
-
                             $("#phone_div").hide();
+                            $("#otp_verify_div").show();
                             $("#verify_otp_message").show();
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
-                        } else {
+
+                        }
+                        else {
                             alert(result.message);
 
 
@@ -360,11 +368,13 @@
                             $(".badNewsContainerEmail").removeClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
                             $('.verify_otp_message').hide();
+                            $(".enter_correct_otp_").hide();
 
 
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
+                            $(".enter_correct_otp_").show();
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },
