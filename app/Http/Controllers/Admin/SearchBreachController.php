@@ -33,8 +33,78 @@ class SearchBreachController extends Controller
 
     public function index()
     {
-        $this->data['searchbreach'] = $this->_model::all();
+//        $this->data['searchbreach'] = $this->_model::all();
         return view($this->_viewPath . 'searchbreach-list', $this->data);
+    }
+    public function searchBreachList(Request $request)
+    {$totalFilteredRecord = $totalDataRecord = $draw_val = "";
+        $columns_list = array(
+            0 =>'id',
+            1 =>'company',
+            2=> 'phone',
+            3=> 'email',
+            4=> 'password',
+            5=> 'action',
+        );
+
+        $totalDataRecord = SearchBreach::count();
+
+        $totalFilteredRecord = $totalDataRecord;
+
+        $limit_val = $request->input('length');
+        $start_val = $request->input('start');
+        $order_val = $columns_list[$request->input('order.0.column')];
+        $dir_val = $request->input('order.0.dir');
+
+        if(empty($request->input('search.value')))
+        {
+            $post_data = SearchBreach::offset($start_val)
+                ->limit($limit_val)
+                ->orderBy($order_val,$dir_val)
+                ->get();
+        }
+        else {
+            $search_text = $request->input('search.value');
+
+            $post_data =  Post::where('id','LIKE',"%{$search_text}%")
+                ->orWhere('title', 'LIKE',"%{$search_text}%")
+                ->offset($start_val)
+                ->limit($limit_val)
+                ->orderBy($order_val,$dir_val)
+                ->get();
+
+            $totalFilteredRecord = SearchBreach::where('id','LIKE',"%{$search_text}%")
+                ->orWhere('title', 'LIKE',"%{$search_text}%")
+                ->count();
+        }
+
+        $data_val = array();
+        if(!empty($post_data))
+        {
+            foreach ($post_data as $post_val)
+            {
+                $datashow =  '';
+                $dataedit =  '';
+
+                $postnestedData['id'] = $post_val->id;
+                $postnestedData['company'] = $post_val->companyData->name;
+                $postnestedData['phone'] = $post_val->phone;
+                    $postnestedData['email'] = $post_val->email;
+                    $postnestedData['password'] = $post_val->password;
+                $postnestedData['action'] = "&emsp;<a href='{$datashow}'class='showdata' title='SHOW DATA' ><span class='showdata glyphicon glyphicon-list'></span></a>&emsp;<a href='{$dataedit}' class='editdata' title='EDIT DATA' ><span class='editdata glyphicon glyphicon-edit'></span></a>";
+                $data_val[] = $postnestedData;
+
+            }
+        }
+        $draw_val = $request->input('draw');
+        $get_json_data = array(
+            "draw"            => intval($draw_val),
+            "recordsTotal"    => intval($totalDataRecord),
+            "recordsFiltered" => intval($totalFilteredRecord),
+            "data"            => $data_val
+        );
+
+        echo json_encode($get_json_data);
     }
 
 

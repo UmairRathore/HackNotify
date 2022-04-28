@@ -98,6 +98,7 @@ Route::get('/delete-company/{id}', [CompanyController::class, 'destroy'])->name(
 //SearchBreach
 //Route::group(['prefix' => 'searchbreach'], function () {
 Route::get('/searchbreach-list', [SearchBreachController::class, 'index'])->name('searchbreach-list');
+Route::post('/searchBreachList', [SearchBreachController::class, 'searchBreachList'])->name('ajaxSearchBreachList');
 Route::get('/add-searchbreach', [SearchBreachController::class, 'create'])->name('show-searchbreach');
 Route::post('/add-searchbreach', [SearchBreachController::class, 'store'])->name('add-searchbreach');
 Route::get('/edit-searchbreach/{id}', [SearchBreachController::class, 'edit'])->name('edit-searchbreach');
