@@ -49,7 +49,7 @@
                                 </div>
                             @endif
                             <div class="datatable-wrapper table-responsive">
-                                <table id="datatable" class="display compact table table-striped table-bordered">
+                                <table id="searchbreachtable" class="display compact table table-striped table-bordered">
 
                                     <thead>
                                     <th>ID</th>
@@ -90,3 +90,22 @@
 
 
 @endsection
+
+@section('searchbreachtable')
+    <script type="text/javascript" charset="utf8" src="{{asset('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchbreachtable').DataTable(
+                {
+                    serverSide: true,
+                    ordering: true,
+                    searching: true,
+                    ajax: {
+                        url: '/searchbreach-list',
+                        type: 'POST'
+                    }
+                });
+        });
+    </script>
+@endsection
+

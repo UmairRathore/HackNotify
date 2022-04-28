@@ -3,7 +3,10 @@
          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <div class="navbar-toggler-icon">
             <img src={{asset('frontend/assets/images/hamburger.35755d7a.svg')}} class="pr-2">
-            <img src={{asset('frontend/assets/images/logo.b008c1cd.svg')}} style="width:50%"></div>
+{{--            <a href="{{route('index')}}" >--}}
+                <img src={{asset('frontend/assets/images/logo.b008c1cd.svg')}} style="width:50%">
+{{--            </a>--}}
+        </div>
     </div>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01"><a class="navbar-brand hidden-sm" href="{{route('index')}}"><img src={{asset('frontend/assets/images/logo.b008c1cd.svg')}}></a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>

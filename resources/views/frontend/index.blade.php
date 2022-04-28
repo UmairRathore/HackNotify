@@ -72,7 +72,7 @@
                                             </span>
                                         </div>
 
-                                        <div id="enter_correct_otp_" class="row col-md-9">
+                                        <div class="enter_correct_otp" class="row col-md-9">
                                         <span class="my-2 text-success">
                                                 The Otp entered is incorrect.
                                             </span>
@@ -289,7 +289,7 @@
                         phone: phone,
                     },
                     success: function (result) {
-                        if (result.status) {
+                        if (result.status == true) {
 
                             // $("#phone_breaches_found").html(result.count);
                             // $(".badNewsContainerPhone").removeClass('d-none');
@@ -372,9 +372,9 @@
 
 
                         } else {
-                            $('.noLeakContainer').removeClass('d-none');
+                            $('.enter_correct_otp').show();
                             $(".badNewsContainerEmail").addClass('d-none');
-                            $(".enter_correct_otp_").show();
+
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },

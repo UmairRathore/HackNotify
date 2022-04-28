@@ -3,7 +3,9 @@
 @section('content')
     <div class="">
         <div class="heading mb-4">
-            <img src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">
+            <a href="{{route('index')}}">
+            <img  src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">
+            </a>
             {{--           {{dd($donate)}}--}}
             {{$donate[0]->title}}
         </div>
@@ -55,16 +57,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="margin-top: auto; margin-bottom: auto; display: flex; flex-direction: row;">
+                                <div style="margin-top: auto; margin-bottom: auto; display: flex; flex-direction: row; padding: 0 15px 0 0">
                                     @if($key!==3)
                                         @if($key!==5)
                                             <img src="{{asset('frontend/assets/images/barCodeIcon.6b3113d0.svg')}}" alt="barCode"
-                                                 style="padding: 15px; cursor: pointer;" data-toggle="tooltip" title="Barcode">
+                                                 style="padding: 15px 0 15px 15px; cursor: pointer;" data-toggle="tooltip" title="Barcode">
                                         @endif
 
                                         <img  class="imageclipboard" id="copy" onclick="copyToClipboard('{{$payment->wallet_number}}')"
                                              src="{{asset('frontend/assets/images/copyIcon.7030ab9b.svg')}}" alt="copy"
-                                             style="padding-right: 15px; cursor: pointer;" data-toggle="tooltip" title="Copy to Clipboard">
+                                             style="padding: 15px;cursor: pointer;" data-toggle="tooltip" title="Copy to Clipboard">
 
                                             <img class="copied d-none"
                                                  src="{{asset('frontend/assets/images/barCodeIcon.6b3113d0.svg')}}" alt="copied"

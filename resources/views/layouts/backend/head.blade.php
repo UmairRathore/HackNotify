@@ -15,7 +15,7 @@
     <link href="{{asset('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700')}}" rel="stylesheet">
 
     <!--DATATABLE-->
-{{--    <link rel="stylesheet" type="text/css" href="{{asset('https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css')}}">--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css')}}">
 
     <!-- plugin stylesheets -->
     <link rel="stylesheet" type="text/css" href="{{asset('backend/assets/css/vendors.css')}}" />

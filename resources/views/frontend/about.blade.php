@@ -3,8 +3,9 @@
 
     <div class="">
         <div class="heading mb-4">
-            <img src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">
-            About</div>
+            <a href="{{route('index')}}">
+                <img  src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">
+            </a>About</div>
 
 {{--        {{dd($about)}}--}}
 

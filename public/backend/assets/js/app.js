@@ -10871,6 +10871,7 @@ $(function(){
                 "bPaginate":true,
                 "bSortable": true,
                 "deferRender": true,
+                "serverside" : true
                 });
                 //     [
             //     {
