@@ -51,7 +51,6 @@
                                 </div>
 
 
-
                                 <div class="tab-panel" id="tabs-profile3" role="tabpanel">
                                     <div id="phone_div">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
@@ -78,10 +77,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
-
-
 
                                 <div class="tab-panel" id="tabs-messages3" role="tabpanel">
                                     <div>
@@ -157,10 +153,10 @@
                         <div class="mr-1"><img src="{{ asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
                         <div class="badNewsText">Bad news</div>
                     </div>
-                    <div class="badNewsDesc"> This password was found in<span id="pass_breaches" style="font-weight: 600;"> data breach</span> data breaches which means it is quite popular. How about using a strong password next time? </div>
+                    <div class="badNewsDesc"> This password was found in<span id="pass_breaches" style="font-weight: 600;"> data breach</span> data breaches which means it is quite popular. How about using a strong password next time?</div>
                 </div>
 
-                    <div id="msg"></div>
+                <div id="msg"></div>
 
             </div>
         </div>
@@ -302,8 +298,7 @@
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
 
-                        }
-                        else {
+                        } else {
                             alert(result.message);
 
 
@@ -369,13 +364,13 @@
                             $("#email_detail").html(result.record.company_data.detail);
                             $(".badNewsContainerEmail").removeClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
-                            $('.verify_otp_message').hide();
-                            $(".enter_correct_otp").hide();
+                            $('#verify_otp_message').hide();
+                            $("#enter_correct_otp").hide();
 
 
-                        } else {
-                            $('.enter_correct_otp').show();
-                            $('.verify_otp_message').hide();
+                        } else if(result.status == false) {
+                            $('#enter_correct_otp').show();
+                            $('#verify_otp_message').hide();
                             $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
 
@@ -391,7 +386,7 @@
         });
 
         $(document).ready(function () {
-            $("#searchpassimg").click(function (e)  {
+            $("#searchpassimg").click(function (e) {
                 $(".badNewsContainerpassword").addClass('d-none');
                 // alert('hello');
                 let password = document.getElementById("password").value;
@@ -410,7 +405,7 @@
 
                         if (result.status == true) {
                             $("#search_type").html('password');
-                            $("#pass_breaches").html(' ' + result.count + ' data breaches' );
+                            $("#pass_breaches").html(' ' + result.count + ' data breaches');
                             // $("#email_company").html(result.record.company_data.name);
                             // $("#email_website").html(result.record.company_data.website);
                             // $("#email_detail").html(result.record.company_data.detail);
