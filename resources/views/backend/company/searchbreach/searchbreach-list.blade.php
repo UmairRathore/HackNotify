@@ -27,7 +27,7 @@
                             <h1>Search Breach</h1>
                         </div>
                         <div class="ml-auto d-flex align-items-center">
-{{--                            <a href="{{route('add-searchbreach')}}" class="btn btn-primary ms-text-primary">Add Search Breach</a>--}}
+                            {{--                            <a href="{{route('add-searchbreach')}}" class="btn btn-primary ms-text-primary">Add Search Breach</a>--}}
 
                         </div>
                     </div>
@@ -61,20 +61,20 @@
                                     </thead>
                                     <tbody>
                                     {{--            {{dd($user)}}--}}
-                                    @foreach($searchbreach as $items)
-                                        {{--                                        {{dd($show)}}--}}
-                                        <tr>
-                                            <td>{{$items->id}}</td>
-                                            <td>{{$items->company_id}}</td>
-                                            <td>{{$items->phone}}</td>
-                                            <td>{{$items->email}}</td>
-                                            <td>{{$items->password}}</td>
-                                            <td>
-                                                <a href="{{route('delete-searchbreach',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Delete" class="ti ti-trash text-danger"> </a>
-{{--                                                <a href="{{route('edit-searchbreach',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Edit" class="ti ti-pencil text-primary"> </a>--}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
+{{--                                    @foreach($searchbreach as $items)--}}
+{{--                                        --}}{{--                                        {{dd($show)}}--}}
+{{--                                        <tr>--}}
+{{--                                            <td>{{$items->id}}</td>--}}
+{{--                                            <td>{{$items->company_id}}</td>--}}
+{{--                                            <td>{{$items->phone}}</td>--}}
+{{--                                            <td>{{$items->email}}</td>--}}
+{{--                                            <td>{{$items->password}}</td>--}}
+{{--                                            <td>--}}
+{{--                                                <a href="{{route('delete-searchbreach',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Delete" class="ti ti-trash text-danger"> </a>--}}
+{{--                                                --}}{{--                                                <a href="{{route('edit-searchbreach',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Edit" class="ti ti-pencil text-primary"> </a>--}}
+{{--                                            </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
                                     </tbody>
                                 </table>
                             </div>
@@ -92,20 +92,51 @@
 @endsection
 
 @section('searchbreachtable')
-    <script type="text/javascript" charset="utf8" src="{{asset('https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js')}}"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script>
+
+        // alert(plan_cat);
+
+        $('#searchbreachtable').DataTable().destroy();
+        var dataTable = $('#searchbreachtable').DataTable({
+            'processing': true,
+            'serverSide': true,
+            //'searching': false, // Remove default Search Control
+            'ajax': {
+                "dataType": "json",
+                "type": "POST",
+                "data":{ _token: "{{csrf_token()}}"},
+                'url': "{{route('ajaxSearchBreachList')}}",
+
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "company" },
+                { "data": "phone" },
+                { "data": "email" },
+                { "data": "password" },
+                { "data": "action" }
+            ]
+
+        });
+        $('#searchdata').keyup(function () {
+            dataTable.draw();
+        });
+
+
         $(document).ready(function () {
-            $('#searchbreachtable').DataTable(
-                {
-                    serverSide: true,
-                    processing: true,
-                    ordering: true,
-                    searching: true,
-                    ajax: {
-                        url: '/searchbreach-list',
-                        type: 'POST'
-                    }
-                });
+            // $('#searchbreachtable').DataTable(
+            //     {
+            //         serverSide: true,
+            //         processing: true,
+            //         ordering: true,
+            //         searching: true,
+            //         ajax: {
+            //             url: '/searchbreach-list',
+            //             type: 'POST'
+            //         }
+            //     });
         });
     </script>
 @endsection
