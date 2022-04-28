@@ -76,6 +76,7 @@
                                         <span class="my-2 text-danger">
                                                 The Otp entered is incorrect.
                                             </span>
+                                        </div>
                                     </div>
                                     </div>
                                 </div>
