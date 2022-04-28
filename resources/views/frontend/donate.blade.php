@@ -47,7 +47,7 @@
                                             {{--                                        Bitcoin--}}
                                         </div>
                                         <div
-                                            id="copy"  class="donateCointWallet">
+                                            id="copy" class="donateCointWallet">
                                             {{--                                        {{$payment[0]->wallet_number}}--}}
                                             {{--                                        {{dd(++$key)}}--}}
                                             {{$payment->wallet_number}}
@@ -62,11 +62,13 @@
                                                  style="padding: 15px; cursor: pointer;" data-toggle="tooltip" title="Barcode">
                                         @endif
 
-                                        <img
-                                            id="copy" onclick="copyToClipboard()"
+                                        <img  class="imageclipboard" id="copy" onclick="copyToClipboard('{{$payment->wallet_number}}')"
+                                             src="{{asset('frontend/assets/images/copyIcon.7030ab9b.svg')}}" alt="copy"
+                                             style="padding-right: 15px; cursor: pointer;" data-toggle="tooltip" title="Copy to Clipboard">
 
-                                            src="{{asset('frontend/assets/images/copyIcon.7030ab9b.svg')}}" alt="copy"
-                                            style="padding-right: 15px; cursor: pointer;" data-toggle="tooltip" title="Copy to Clipboard">
+                                            <img class="copied d-none"
+                                                 src="{{asset('frontend/assets/images/barCodeIcon.6b3113d0.svg')}}" alt="copied"
+                                                 style="padding-right: 15px; cursor: pointer;" data-toggle="tooltip" title="Copied to Clipboard">
                                     @endif
 
                                     @if($key==3)
@@ -92,14 +94,26 @@
 
 
     <script>
-        function copyToClipboard() {
-            var range = document.createRange();
-            range.selectNode(document.getElementById("copy"));
-            window.getSelection().removeAllRanges(); // clear current selection
-            window.getSelection().addRange(range); // to select text
+
+        function copyToClipboard(text) {
+            var sampleTextarea = document.createElement("textarea");
+            document.body.appendChild(sampleTextarea);
+            sampleTextarea.value = text; //save main text in it
+            sampleTextarea.select(); //select textarea contenrs
             document.execCommand("copy");
-            window.getSelection().removeAllRanges();// to deselect
+            document.body.removeChild(sampleTextarea);
+            alert('Copied : ' + text)
+
+                if (text.status !== true) {
+                    // $(".copied").removeClass('d-none');
+                    // $(".imageclipboard").hide();
+
+                }
+
         }
+
+
+
     </script>
 @endsection
 

@@ -113,7 +113,7 @@ class HomeController extends Controller
 
             $password = SearchBreach::where('password', '=', $request->password)->get();
 
-            if ($password->count()) {
+            if ($password->count() && $request->password) {
                 $record = SearchBreach::with('companyData')->where('password', '=', $request->password)->first();
                 return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $password->count()]);
             } else {

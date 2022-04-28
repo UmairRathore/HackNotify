@@ -135,11 +135,21 @@
                     <div class="badNewsDesc">Your number has been found in <span id="phone_breaches_found"></span> data breaches. To see details verify that this phone number belongs to you. In order to do so, Hacknotify.com will a verification code on the phone number you just search for.</div>
                     <button class="badNewsButton" id="getVerificationCode">Get a verification code</button>
                 </div>
+
+
                 <div class="noLeakContainer d-none"><img alt="done" src="{{asset('frontend/assets/images/done.5255612b.svg')}}" class="noLeakImage">
                     <p class="noLeakText">Looks like no leak has been found in the database</p>
                 </div>
 
-                <div id="msg"></div>
+                <div class="badNewsContainer badNewsContainerpassword d-none">
+                    <div class="row">
+                        <div class="mr-1"><img src="{{ asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
+                        <div class="badNewsText">Bad news</div>
+                    </div>
+                    <div class="badNewsDesc"> This password was found in<span id="pass_breaches" style="font-weight: 600;"> data breach</span> data breaches which means it is quite popular. How about using a strong password next time? </div>
+                </div>
+
+                    <div id="msg"></div>
 
             </div>
         </div>
@@ -357,7 +367,8 @@
         });
 
         $(document).ready(function () {
-            $("#searchpassimg").click(function (e) {
+            $("#searchpassimg").click(function (e)  {
+                $(".badNewsContainerpassword").addClass('d-none');
                 // alert('hello');
                 let password = document.getElementById("password").value;
                 // alert(email);
@@ -372,19 +383,23 @@
                         // access_token: $("#access_token").val()
                     },
                     success: function (result) {
-                        if (result.status == true) {
 
-                            $("#email_breaches").html(result.count + ' data breaches');
-                            $("#email_company").html(result.record.company_data.name);
-                            $("#email_website").html(result.record.company_data.website);
-                            $("#email_detail").html(result.record.company_data.detail);
-                            $(".badNewsContainerEmail").removeClass('d-none');
+                        if (result.status == true) {
+                            $("#search_type").html('password');
+                            $("#pass_breaches").html(' ' + result.count + ' data breaches' );
+                            // $("#email_company").html(result.record.company_data.name);
+                            // $("#email_website").html(result.record.company_data.website);
+                            // $("#email_detail").html(result.record.company_data.detail);
+                            $(".badNewsContainerpassword").removeClass('d-none');
+                            $(".badNewsContainerEmail").hide();
                             $('.noLeakContainer').addClass('d-none');
 
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
-                            $(".badNewsContainerEmail").addClass('d-none');
+                            $(".badNewsContainerpassword").addclass('d-none');
+                            $(".badNewsContainerEmail").hide();
                         }
+
                     },
                     error: function (result) {
                         alert('error');
@@ -392,6 +407,7 @@
                 });
             });
         });
+
 
 
 
