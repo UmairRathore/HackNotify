@@ -297,6 +297,7 @@
                             $("#phone_div").hide();
                             $("#otp_verify_div").show();
                             $("#verify_otp_message").show();
+                            $("#enter_correct_otp").hide();
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
 
@@ -368,7 +369,7 @@
                             $(".badNewsContainerEmail").removeClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
                             $('.verify_otp_message').hide();
-                            $(".enter_correct_otp_").hide();
+                            $(".enter_correct_otp").hide();
 
 
                         } else {
