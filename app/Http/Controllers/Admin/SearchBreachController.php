@@ -36,15 +36,18 @@ class SearchBreachController extends Controller
 //        $this->data['searchbreach'] = $this->_model::all();
         return view($this->_viewPath . 'searchbreach-list', $this->data);
     }
+
     public function searchBreachList(Request $request)
-    {$totalFilteredRecord = $totalDataRecord = $draw_val = "";
+    {
+        $totalFilteredRecord = $totalDataRecord = $draw_val = "";
         $columns_list = array(
-            0 =>'id',
-            1 =>'company',
-            2=> 'phone',
-            3=> 'email',
-            4=> 'password',
-            5=> 'action',
+            0 => 'id',
+            1 => 'company_id',
+            2 => 'phone',
+            3 => 'email',
+            4 => 'password',
+            5 => 'id',
+
         );
 
         $totalDataRecord = SearchBreach::count();
@@ -56,52 +59,56 @@ class SearchBreachController extends Controller
         $order_val = $columns_list[$request->input('order.0.column')];
         $dir_val = $request->input('order.0.dir');
 
-        if(empty($request->input('search.value')))
-        {
+        if (empty($request->input('search.value'))) {
             $post_data = SearchBreach::offset($start_val)
                 ->limit($limit_val)
-                ->orderBy($order_val,$dir_val)
+                ->orderBy($order_val, $dir_val)
                 ->get();
-        }
-        else {
+        } else {
             $search_text = $request->input('search.value');
 
-            $post_data =  Post::where('id','LIKE',"%{$search_text}%")
-                ->orWhere('title', 'LIKE',"%{$search_text}%")
+            $post_data = SearchBreach::where('email', 'LIKE', "%{$search_text}%")
+                ->orwhereHas('companyData', function ($query) use ($search_text) {
+                    $query->where('name', 'like', '%' . $search_text . '%');
+                })
+                ->orWhere('phone', 'LIKE', "%{$search_text}%")
                 ->offset($start_val)
                 ->limit($limit_val)
-                ->orderBy($order_val,$dir_val)
+                ->orderBy($order_val, $dir_val)
                 ->get();
-
-            $totalFilteredRecord = SearchBreach::where('id','LIKE',"%{$search_text}%")
-                ->orWhere('title', 'LIKE',"%{$search_text}%")
+            $totalFilteredRecord = SearchBreach::where('email', 'LIKE', "%{$search_text}%")
+                ->orwhereHas('companyData', function ($query) use ($search_text) {
+                    $query->where('name', 'like', '%' . $search_text . '%');
+                })->orWhere('phone', 'LIKE', "%{$search_text}%")
                 ->count();
         }
 
         $data_val = array();
-        if(!empty($post_data))
-        {
-            foreach ($post_data as $post_val)
-            {
-                $datashow =  '';
-                $dataedit =  '';
+        if (!empty($post_data)) {
+            foreach ($post_data as $post_val) {
+                $datashow = '';
+                $dataedit = '';
+
+                $button = "<a href=" . route('delete-searchbreach', $post_val->id) . " data-toggle='tooltip' data-placement='top' title='Delete' class='ti ti-trash text-danger'> </a>";
+                $button .= "<a href=" . route('edit-searchbreach', $post_val->id) . " data-toggle='tooltip' data-placement='top' title='Edit' class='ti ti-pencil text-primary'> </a>";
 
                 $postnestedData['id'] = $post_val->id;
                 $postnestedData['company'] = $post_val->companyData->name;
                 $postnestedData['phone'] = $post_val->phone;
-                    $postnestedData['email'] = $post_val->email;
-                    $postnestedData['password'] = $post_val->password;
-                $postnestedData['action'] = "&emsp;<a href='{$datashow}'class='showdata' title='SHOW DATA' ><span class='showdata glyphicon glyphicon-list'></span></a>&emsp;<a href='{$dataedit}' class='editdata' title='EDIT DATA' ><span class='editdata glyphicon glyphicon-edit'></span></a>";
+                $postnestedData['email'] = $post_val->email;
+                $postnestedData['password'] = $post_val->password;
+                $postnestedData['action'] = $button;
+//                $postnestedData['action'] = "&emsp;<a href='{$datashow}'class='showdata' title='SHOW DATA' ><span class='showdata glyphicon glyphicon-list'></span></a>&emsp;<a href='{$dataedit}' class='editdata' title='EDIT DATA' ><span class='editdata glyphicon glyphicon-edit'></span></a>";
                 $data_val[] = $postnestedData;
 
             }
         }
         $draw_val = $request->input('draw');
         $get_json_data = array(
-            "draw"            => intval($draw_val),
-            "recordsTotal"    => intval($totalDataRecord),
+            "draw" => intval($draw_val),
+            "recordsTotal" => intval($totalDataRecord),
             "recordsFiltered" => intval($totalFilteredRecord),
-            "data"            => $data_val
+            "data" => $data_val
         );
 
         echo json_encode($get_json_data);
@@ -125,7 +132,7 @@ class SearchBreachController extends Controller
 //        ]);
 //        $company_id = new CompanyImport($company_id);
 //        $company_id = $request->company_id;
-        $check =  Excel::import(new SearchBreachImport(), $request->file('file'));
+        $check = Excel::import(new SearchBreachImport(), $request->file('file'));
 
 //        $searchbreach->save();
 
@@ -165,7 +172,7 @@ class SearchBreachController extends Controller
         $searchbreach->phone = $request->phone;
         $searchbreach->email = $request->email;
         $searchbreach->password = $request->password;
-        $check =  $searchbreach->update();
+        $check = $searchbreach->update();
 
         if ($check) {
             $msg = 'Record Updated successfully';
@@ -176,7 +183,8 @@ class SearchBreachController extends Controller
             Session::flash('msg', $msg);
             Session::flash('message', 'alert-danger');
         }
-        return redirect()->back();    }
+        return redirect()->back();
+    }
 
     public function destroy($id)
     {

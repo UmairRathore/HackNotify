@@ -53,7 +53,7 @@
 
                                     <thead>
                                     <th>ID</th>
-                                    <th>Company_ID</th>
+                                    <th>Company Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
                                     <th>Password</th>
