@@ -72,8 +72,8 @@
                                             </span>
                                         </div>
 
-                                        <div class="enter_correct_otp" class="row col-md-9">
-                                        <span class="my-2 text-success">
+                                        <div id="enter_correct_otp" class="row col-md-9">
+                                        <span class="my-2 text-danger">
                                                 The Otp entered is incorrect.
                                             </span>
                                     </div>
@@ -374,6 +374,7 @@
 
                         } else {
                             $('.enter_correct_otp').show();
+                            $('.verify_otp_message').hide();
                             $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
 
