@@ -374,6 +374,7 @@
 
                         } else {
                             $('.enter_correct_otp').show();
+                            $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
 
                         }

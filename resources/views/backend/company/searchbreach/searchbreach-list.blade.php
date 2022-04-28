@@ -98,6 +98,7 @@
             $('#searchbreachtable').DataTable(
                 {
                     serverSide: true,
+                    processing: true,
                     ordering: true,
                     searching: true,
                     ajax: {
