@@ -4,9 +4,9 @@
         <div class="mainDPContainer">
             <div class="mainDPContainerInside1">
                 <div class="heading mb-2">
-                    <a href="{{route('index')}}">
-                        <img  src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">
-                    </a>
+{{--                    <a href="{{route('index')}}">--}}
+{{--                        <img  src="{{asset('frontend/assets/images/back.d0386015.svg')}}" class="pr-2 hideMobile">--}}
+{{--                    </a>--}}
 
                     {{ $heading[0]->title}}
                     {{--                            Data Protection--}}
