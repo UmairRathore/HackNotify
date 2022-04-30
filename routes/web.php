@@ -12,8 +12,8 @@ use App\Http\Controllers\Admin\NewsletterSubscriberController;
 
 //Portal
 use App\Http\Controllers\Admin\AboutusController;
-use App\Http\Controllers\Admin\AjaxController;
-use App\Http\Controllers\Admin\IndianBloodDonorsController;
+//use App\Http\Controllers\Admin\AjaxController;
+//use App\Http\Controllers\Admin\IndianBloodDonorsController;
 use App\Http\Controllers\Admin\SearchBreachController;
 use App\Http\Controllers\Admin\CompanyController;
 
@@ -42,8 +42,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('list', [AjaxController::class, 'index']);
-Route::get('show-user', [AjaxController::class, 'show']);
+//Route::get('list', [AjaxController::class, 'index']);
+//Route::get('show-user', [AjaxController::class, 'show']);
 
 
 
@@ -108,14 +108,14 @@ Route::get('/delete-searchbreach/{id}', [SearchBreachController::class, 'destroy
 
 //Donors
 
-//Route::group(['prefix' => 'indian-blood-donors'], function () {
-Route::get('/indian-blood-donors-list', [IndianBloodDonorsController::class, 'index'])->name('indian-blood-donors-list');
-Route::get('/add-indian-blood-donors', [IndianBloodDonorsController::class, 'create'])->name('show-indian-blood-donors');
-Route::post('/add-indian-blood-donors', [IndianBloodDonorsController::class, 'store'])->name('add-indian-blood-donors');
-Route::get('/edit-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'edit'])->name('edit-indian-blood-donors');
-Route::PUT('/update-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'update'])->name('update-indian-blood-donors');
-Route::get('/delete-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'destroy'])->name('delete-indian-blood-donors');
-//});
+////Route::group(['prefix' => 'indian-blood-donors'], function () {
+//Route::get('/indian-blood-donors-list', [IndianBloodDonorsController::class, 'index'])->name('indian-blood-donors-list');
+//Route::get('/add-indian-blood-donors', [IndianBloodDonorsController::class, 'create'])->name('show-indian-blood-donors');
+//Route::post('/add-indian-blood-donors', [IndianBloodDonorsController::class, 'store'])->name('add-indian-blood-donors');
+//Route::get('/edit-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'edit'])->name('edit-indian-blood-donors');
+//Route::PUT('/update-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'update'])->name('update-indian-blood-donors');
+//Route::get('/delete-indian-blood-donors/{id}', [IndianBloodDonorsController::class, 'destroy'])->name('delete-indian-blood-donors');
+////});
 
 
 
