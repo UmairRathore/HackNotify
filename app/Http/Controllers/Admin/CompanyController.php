@@ -54,61 +54,7 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
-//        $request->validate([
-//            'name' => 'required',
-//            'industry' => 'required',
-//            'date_of_data_breach' => 'required',
-//            'no_of_leaked_accounts' => 'required',
-//            'website' => 'required',
-//            'detail' => 'required'
-
-//        ]);
-
-//        $company = $this->_model;
-//        $company->name = $request->name;
-//        $company->industry = 'industry';
-//        $company->date_of_data_breach = 'date_of_data_breach';
-//        $company->number_of_leaked_accounts = 'number_of_leaked_accounts';
-//        $company->website = 'website';
-//        $company->detail = 'detail';
-
-
-//        $company->name = $request->name;
-//        $company->industry = $request->industry;
-//        $company->date_of_data_breach = $request->date_of_data_breach;
-//        $company->no_of_leaked_accounts = $request->number_of_leaked_accounts;
-//        $company->website = $request->website;
-//        $company->detail = $request->detail;
-//        $company->save();
-//dd('on');
-//        $file =Excel::load($request->file('file'), function($reader) {
 //
-//        })->get();
-//
-//        dd($file);
-//        if(isset($_POST["file"]))
-//        {
-//            $file = $_FILES["file"]["tmp_name"];
-//            $file_open = fopen($file,"r");
-//            while(($csv = fgetcsv($file_open, 1000, ",")) !== false)
-//            {
-//                $data[] = [
-//                    'name' => $csv[0],
-//                    'industry' => $csv[1],
-//                    'date_of_data_breach' => $csv[2],
-//                    'number_of_leaked_accounts' => $csv[3],
-//                    'website' => $csv[4],
-//                    'detail' => $csv[5],
-//        ];
-//
-//
-//                DB::table('Company')->insert($data);
-//
-////                DB:INSERT INTO employee VALUES ('$name','$age','country')");
-//            }
-//
-//        }
-
         $check =  Excel::import(new CompanyImport(),$request->file('file'));
 
         if ($check) {
@@ -116,7 +62,7 @@ class CompanyController extends Controller
             Session::flash('msg', $msg);
             Session::flash('message', 'alert-success');
         } else {
-            $msg = 'Record not imported successfully';
+            $msg = 'CSV not imported successfully';
             Session::flash('msg', $msg);
             Session::flash('message', 'alert-danger');
         }
@@ -137,21 +83,15 @@ class CompanyController extends Controller
             'name' => 'required',
             'industry' => 'required',
             'date_of_data_breach' => 'required',
-            'no_of_leaked_accounts' => 'required',
+            'number_of_leaked_accounts' => 'required',
             'website' => 'required',
             'detail' => 'required'
 
         ]);
 
-        $company = $this->_model::find($id);
-        $company->name = $request->name;
-        $company->industry = $request->industry;
-        $company->date_of_data_breach = $request->date_of_data_breach;
-        $company->number_of_leaked_accounts = $request->number_of_leaked_accounts;
-        $company->website = $request->website;
-        $company->detail = $request->detail;
-//        dd($company);
-        $check = $company->update();
+        $company =  $this->_model::find($id);
+        $input = $request->all();
+        $check = $company->update($input);
         if ($check) {
             $msg = 'Record updated successfully';
             Session::flash('msg', $msg);
@@ -164,6 +104,7 @@ class CompanyController extends Controller
         return redirect()->back();
 
     }
+
     public function destroy($id)
     {
         $company = $this->_model::find($id);

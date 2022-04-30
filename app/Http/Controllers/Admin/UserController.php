@@ -132,7 +132,6 @@ class UserController extends Controller
         return redirect()->back();
 
 
-        return redirect()->back()->withInput()->with('info_updated', 'Member Info has been updated successfuly!');
     }
 
 
