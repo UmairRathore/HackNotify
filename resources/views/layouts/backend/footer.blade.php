@@ -7,6 +7,8 @@
 
 <!-- custom app -->
 
+<script src="{{asset('backend/assets/js/app.js')}}"></script>
+
 
 <!-- Ck Editor 5  -->
 <script src="{{asset('https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js')}}"></script>

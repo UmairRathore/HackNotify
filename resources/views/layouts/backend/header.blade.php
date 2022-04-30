@@ -4,7 +4,7 @@
 
         <!-- begin navbar-header -->
         <div class="navbar-header d-flex align-items-center">
-            <a href="javascript:void:(0)" class="mobile-toggle"><i class="ti ti-align-right"></i></a>
+            <a href="javascript:void(0)" class="mobile-toggle"><i class="ti ti-align-right"></i></a>
             <a class="navbar-brand" href="{{route('index')}}">
                 <img src="{{asset('backend/assets/img/logo.png')}}" class="img-fluid logo-desktop" alt="logo"/>
                 <img src="{{asset('backend/assets/img/logo-icon.png')}}" class="img-fluid logo-mobile" alt="logo"/>
