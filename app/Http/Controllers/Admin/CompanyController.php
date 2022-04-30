@@ -120,7 +120,8 @@ class CompanyController extends Controller
             Session::flash('msg', $msg);
             Session::flash('message', 'alert-danger');
         }
-        return redirect()->back();    }
+        return redirect()->back();
+    }
 
 
     public function edit($id)
@@ -131,6 +132,7 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request);
         $request->validate([
             'name' => 'required',
             'industry' => 'required',
@@ -145,12 +147,37 @@ class CompanyController extends Controller
         $company->name = $request->name;
         $company->industry = $request->industry;
         $company->date_of_data_breach = $request->date_of_data_breach;
-        $company->no_of_leaked_accounts = $request->no_of_leaked_accounts;
+        $company->number_of_leaked_accounts = $request->number_of_leaked_accounts;
         $company->website = $request->website;
         $company->detail = $request->detail;
-        $company->update();
+//        dd($company);
+        $check = $company->update();
+        if ($check) {
+            $msg = 'Record updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not updated successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
 
-        return back();
+    }
+    public function destroy($id)
+    {
+        $company = $this->_model::find($id);
+        $check = $company->delete();
+        if ($check) {
+            $msg = 'Record deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        } else {
+            $msg = 'Record not deleted successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
 

@@ -115,7 +115,7 @@ class HomeHeadingController extends Controller
             if ($check) {
                 $msg = 'Record deleted successfully';
                 Session::flash('msg', $msg);
-                Session::flash('message', 'alert-success');
+                Session::flash('message', 'alert-danger');
             } else {
                 $msg = 'Record not deleted successfully';
                 Session::flash('msg', $msg);

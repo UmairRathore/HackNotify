@@ -32,9 +32,9 @@ class RecentBranchesController extends Controller
     public function index()
     {
 
-        $this->data['recentbranches'] = $this->_model::all();
+        $this->data['recentbreaches'] = $this->_model::all();
 
-        return view($this->_viewPath.'recentbranches-list', $this->data);
+        return view($this->_viewPath.'recentbreaches-list', $this->data);
 
     }
 
@@ -45,7 +45,7 @@ class RecentBranchesController extends Controller
     //Add-Recent Branches (page)
     public function create()
     {
-        return view($this->_viewPath.'add-recentbranches');
+        return view($this->_viewPath.'add-recentbreaches');
     }
 
     public function store(Request $request)
@@ -64,9 +64,9 @@ class RecentBranchesController extends Controller
 
 
 
-        $recentbranches = $this->_model;
-        $recentbranches->title = $request->input('title');
-        $recentbranches->paragraph = $request->input('paragraph');
+        $recentbreaches = $this->_model;
+        $recentbreaches->title = $request->input('title');
+        $recentbreaches->paragraph = $request->input('paragraph');
         if ($request->hasfile('rb_image')) {
             //upload new file
             $file = $request->file('rb_image');
@@ -74,15 +74,15 @@ class RecentBranchesController extends Controller
 //                $extension=$file->getClientOriginalExtension();
             $filename = $path . time() . '-' . $file->getClientOriginalName();
             $file->move($path, $filename);
-            $recentbranches->rb_image = $filename;
-//            dd($recentbranches);
+            $recentbreaches->rb_image = $filename;
+//            dd($recentbreaches);
 
         } else {
 
-            $recentbranches->rb_image = 'default-image.png';
+            $recentbreaches->rb_image = 'default-image.png';
         }
 
-        $recentbranches->save();
+        $recentbreaches->save();
         return back()->with('info_created', 'New specialization has been added Successfully!');
     }
 
@@ -90,8 +90,8 @@ class RecentBranchesController extends Controller
 //Recent Branches Edit
     public function edit($id)
     {
-        $this->data['recentbranches'] = $this->_model::where('id', $id)->first();
-        return view($this->_viewPath.'edit-recentbranches', $this->data);
+        $this->data['$recentbreaches'] = $this->_model::where('id', $id)->first();
+        return view($this->_viewPath.'edit-recentbreaches', $this->data);
     }
 
 
@@ -105,12 +105,12 @@ class RecentBranchesController extends Controller
 
         ]);
 
-        $recentbranches = $this->_model::find($id);
-        $recentbranches->title = $request->input('title');
-        $recentbranches->paragraph = $request->input('paragraph');
+        $recentbreaches = $this->_model::find($id);
+        $recentbreaches->title = $request->input('title');
+        $recentbreaches->paragraph = $request->input('paragraph');
 
         if ($request->hasfile('rb_image')) { //code for remove old file
-            $destination = $recentbranches->rb_image;
+            $destination = $recentbreaches->rb_image;
 //            dd($destination);
             if (File::exists($destination)) {
                 File::delete($destination);
@@ -121,13 +121,13 @@ class RecentBranchesController extends Controller
             $path = 'images/';
 //                $extension=$file->getClientOriginalExtension();
             $filename = $path . time() . '-' . $file->getClientOriginalName();
-            $recentbranches->rb_image = $filename;
+            $recentbreaches->rb_image = $filename;
             $file->move($path, $filename);
 
         }
 
         //for update in table
-        $check =  $recentbranches->update();
+        $check =  $recentbreaches->update();
         if ($check) {
             $msg = 'Record Updated successfully';
             Session::flash('msg', $msg);
@@ -143,19 +143,19 @@ class RecentBranchesController extends Controller
     //Recent Branches Delete
     public function destroy($id)
     {
-        $recentbranches = $this->_model::find($id);
-        $destination = $recentbranches->rb_image;
+        $recentbreaches = $this->_model::find($id);
+        $destination = $recentbreaches->rb_image;
 
         //code for remove old file
 //        dd($destination);
         if (File::exists($destination)) {
             File::delete($destination);
         }
-        $check = $recentbranches->delete();
+        $check = $recentbreaches->delete();
         if ($check) {
             $msg = 'Record deleted successfully';
             Session::flash('msg', $msg);
-            Session::flash('message', 'alert-success');
+            Session::flash('message', 'alert-danger');
         } else {
             $msg = 'Record not deleted successfully';
             Session::flash('msg', $msg);

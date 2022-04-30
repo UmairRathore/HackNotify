@@ -39,14 +39,14 @@
             <!-- begin row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-statistics">
-                        <div class="card-body">
                             @if(Session::has('message'))
                                 <div class="alert @if(Session::has('message')) {!! session('message') !!} @endif alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                     {!! session('msg') !!}
                                 </div>
                             @endif
+                    <div class="card card-statistics">
+                        <div class="card-body">
 
                             <form method="POST" action="{{route('add-company')}}" enctype="multipart/form-data">
                                 @csrf

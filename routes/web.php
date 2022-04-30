@@ -208,12 +208,12 @@ Route::get('delete-cards/{id}', [CardsController::class, 'destroy'])->name('dele
 //Recent Branches
 
 //Route::group(['prefix' => 'Recent Branches'], function () {
-Route::get('recentbranches-list', [RecentBranchesController::class, 'index'])->name('recentbranches-list');
-Route::get('add-recentbranches', [RecentBranchesController::class, 'create'])->name('show-recentbranches');
-Route::post('add-recentbranches', [RecentBranchesController::class, 'store'])->name('add-recentbranches');
-Route::get('edit-recentbranches/{id}', [RecentBranchesController::class, 'edit'])->name('edit-recentbranches');
-Route::PUT('update-recentbranches/{id}', [RecentBranchesController::class, 'update'])->name('update-recentbranches');
-Route::get('delete-recentbranches/{id}', [RecentBranchesController::class, 'destroy'])->name('delete-recentbranches');
+Route::get('recentbreaches-list', [RecentBranchesController::class, 'index'])->name('recentbreaches-list');
+Route::get('add-recentbreaches', [RecentBranchesController::class, 'create'])->name('show-recentbreaches');
+Route::post('add-recentbreaches', [RecentBranchesController::class, 'store'])->name('add-recentbreaches');
+Route::get('edit-recentbreaches/{id}', [RecentBranchesController::class, 'edit'])->name('edit-recentbreaches');
+Route::PUT('update-recentbreaches/{id}', [RecentBranchesController::class, 'update'])->name('update-recentbreaches');
+Route::get('delete-recentbreaches/{id}', [RecentBranchesController::class, 'destroy'])->name('delete-recentbreaches');
 //});
 
 //GDPR Compliance

@@ -35,7 +35,7 @@
                 </a>
                 <ul id="home" class="collapse" aria-labelledby="home" data-bs-parent="#side-nav-accordion">
                     <li> <a href="{{route('homeheading-list')}}">Heading </a> </li>
-                    <li> <a href="{{route('recentbranches-list')}}">Recent Branches</a> </li>
+                    <li> <a href="{{route('recentbreaches-list')}}">Recent Breaches</a> </li>
                 </ul>
             </li>
 

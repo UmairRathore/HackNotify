@@ -28,10 +28,10 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                         <div class="page-title mb-2 mb-sm-0">
-                            <h1>Recent Branches</h1>
+                            <h1>Recent Breaches</h1>
                         </div>
                         <div class="ml-auto d-flex align-items-center">
-                            <a href="{{route('recentbranches-list')}}" class="btn btn-primary ms-text-primary">Recent Branches List</a>
+                            <a href="{{route('recentbreaches-list')}}" class="btn btn-primary ms-text-primary">Recent Breaches List</a>
 
                         </div>
                     </div>
@@ -51,14 +51,14 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{route('update-recentbranches' , $recentbranches->id)}}" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('update-recentbreaches' , $recentbreaches->id)}}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="title">title</label>
                                         <div class="input-group">
-                                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$recentbranches->title}}" placeholder="Enter Title">
+                                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" value="{{$recentbreaches->title}}" placeholder="Enter Title">
                                             @error('title')
                                             <span class="invalid-feedback" role="alert">
 
@@ -70,7 +70,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="paragraph">paragraph</label>
                                         <div class="input-group">
-                                            <input type="text" name="paragraph" class="form-control @error('paragraph') is-invalid @enderror" value="{{$recentbranches->paragraph}}" placeholder="Type paragraph">
+                                            <input type="text" name="paragraph" class="form-control @error('paragraph') is-invalid @enderror" value="{{$recentbreaches->paragraph}}" placeholder="Type paragraph">
                                             @error('paragraph')
                                             <span class="invalid-feedback" role="alert">
 
@@ -85,8 +85,8 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            @if($recentbranches->rb_image)
-                                                <img src="{{ asset($recentbranches->rb_image) }}" width="70px" height="70px" class="img-thumbnail img-fluid blog-img" alt="Image">
+                                            @if($recentbreaches->rb_image)
+                                                <img src="{{ asset($recentbreaches->rb_image) }}" width="70px" height="70px" class="img-thumbnail img-fluid blog-img" alt="Image">
                                             @else
                                                 <img src="default_image.jpg" width="70px" height="70px" class="img-thumbnail img-fluid blog-img" alt="no image">
                                             @endif

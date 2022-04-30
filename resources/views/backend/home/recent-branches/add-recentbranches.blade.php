@@ -23,10 +23,10 @@
                     <!-- begin page title -->
                     <div class="d-block d-sm-flex flex-nowrap align-items-center">
                         <div class="page-title mb-2 mb-sm-0">
-                            <h1> Recent Branches</h1>
+                            <h1> Recent Breaches</h1>
                         </div>
                         <div class="ml-auto d-flex align-items-center">
-                            <a href="{{route('recentbranches-list')}}" class="btn btn-primary ms-text-primary">Recent Branches List</a>
+                            <a href="{{route('recentbreaches-list')}}" class="btn btn-primary ms-text-primary">Recent Breaches List</a>
 
                         </div>
                     </div>
@@ -37,16 +37,16 @@
             <!-- begin row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-statistics">
-                        <div class="card-body">
                             @if(Session::has('message'))
                                 <div class="alert @if(Session::has('message')) {!! session('message') !!} @endif alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                     {!! session('msg') !!}
                                 </div>
                             @endif
+                    <div class="card card-statistics">
+                        <div class="card-body">
 
-                            <form method="POST" action="{{route('add-recentbranches')}}" enctype="multipart/form-data">
+                            <form method="POST" action="{{route('add-recentbreaches')}}" enctype="multipart/form-data">
                                 @csrf
 
 

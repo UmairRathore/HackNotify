@@ -30,23 +30,24 @@
                         <div class="ml-auto d-flex align-items-center">
                             <a href="{{route('searchbreach-list')}}" class="btn btn-primary ms-text-primary">Search Breach List</a>
 
-                        </div>
                     </div>
                     <!-- end page title -->
                 </div>
+                        </div>
             </div>
             <!-- end row -->
             <!-- begin row -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-statistics">
+                        @if(Session::has('message'))
+                            <div class="alert @if(Session::has('message')) {!! session('message') !!} @endif alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {!! session('msg') !!}
+                            </div>
+                        @endif
                         <div class="card-body">
-                            @if(Session::has('message'))
-                                <div class="alert @if(Session::has('message')) {!! session('message') !!} @endif alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                    {!! session('msg') !!}
-                                </div>
-                            @endif
+
 
                             <form method="POST" action="{{route('update-searchbreach',$searchbreach->id)}}" enctype="multipart/form-data">
                                 @csrf

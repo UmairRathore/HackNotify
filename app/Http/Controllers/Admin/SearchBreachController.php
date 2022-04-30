@@ -120,18 +120,19 @@ class SearchBreachController extends Controller
 
     public function store(Request $request)
     {
-//        $request->validate([
-//            'company_id' => 'required',
-//            'phone' => 'required|numeric',
-//            'email' => 'required|email',
-//            'password' => 'required'
+        $request->validate([
+            'company_id' => 'required',
+            'phone' => 'required|numeric',
+            'email' => 'required|email',
+            'password' => 'required'
 
-//        ]);
-//        $company_id = new CompanyImport($company_id);
-//        $company_id = $request->company_id;
-        $check = Excel::import(new SearchBreachImport(), $request->file('file'));
-
-//        $searchbreach->save();
+        ]);
+        $searchbreach = $this->_model;
+        $searchbreach->company_id = $request->company_id;
+        $searchbreach->email = $request->email;
+        $searchbreach->phone = $request->phone;
+        $searchbreach->password = $request->password;
+         $check =  $searchbreach->save();
 
 
         if ($check) {
@@ -157,7 +158,6 @@ class SearchBreachController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'company_id' => 'required',
             'phone' => 'required|numeric',
             'email' => 'required|email',
             'password' => 'required'
@@ -165,7 +165,6 @@ class SearchBreachController extends Controller
         ]);
 
         $searchbreach = $this->_model::find($id);
-        $searchbreach->company_id = $request->company_id;
         $searchbreach->phone = $request->phone;
         $searchbreach->email = $request->email;
         $searchbreach->password = $request->password;
@@ -190,7 +189,7 @@ class SearchBreachController extends Controller
         if ($check) {
             $msg = 'Record deleted successfully';
             Session::flash('msg', $msg);
-            Session::flash('message', 'alert-success');
+            Session::flash('message', 'alert-danger');
         } else {
             $msg = 'Record not deleted successfully';
             Session::flash('msg', $msg);
