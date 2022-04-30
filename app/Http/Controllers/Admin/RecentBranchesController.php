@@ -34,7 +34,7 @@ class RecentBranchesController extends Controller
 
         $this->data['recentbreaches'] = $this->_model::all();
 
-        return view($this->_viewPath.'recentbreaches-list', $this->data);
+        return view($this->_viewPath.'recentbranches-list', $this->data);
 
     }
 
@@ -45,7 +45,7 @@ class RecentBranchesController extends Controller
     //Add-Recent Branches (page)
     public function create()
     {
-        return view($this->_viewPath.'add-recentbreaches');
+        return view($this->_viewPath.'add-recentbranches');
     }
 
     public function store(Request $request)
@@ -82,8 +82,17 @@ class RecentBranchesController extends Controller
             $recentbreaches->rb_image = 'default-image.png';
         }
 
-        $recentbreaches->save();
-        return back()->with('info_created', 'New specialization has been added Successfully!');
+        $check = $recentbreaches->save();
+        if ($check) {
+            $msg = 'Record Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-success');
+        } else {
+            $msg = 'Record not Added successfully';
+            Session::flash('msg', $msg);
+            Session::flash('message', 'alert-danger');
+        }
+        return redirect()->back();
     }
 
 
@@ -91,7 +100,7 @@ class RecentBranchesController extends Controller
     public function edit($id)
     {
         $this->data['$recentbreaches'] = $this->_model::where('id', $id)->first();
-        return view($this->_viewPath.'edit-recentbreaches', $this->data);
+        return view($this->_viewPath.'edit-recentbranches', $this->data);
     }
 
 
@@ -137,7 +146,8 @@ class RecentBranchesController extends Controller
             Session::flash('msg', $msg);
             Session::flash('message', 'alert-danger');
         }
-        return redirect()->back();    }
+        return redirect()->back();
+    }
 
 
     //Recent Branches Delete

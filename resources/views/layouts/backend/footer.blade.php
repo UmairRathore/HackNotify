@@ -26,9 +26,11 @@
 </script>
 
 
+
 {{-----------------------------------------------DATA-TABLES-------------------------------------------------}}
 {{--gdpr Compliances Table--}}
 @yield('gdpr')
+@yield('aboutustable')
 @yield('searchbreachtable')
 
 

@@ -1,5 +1,18 @@
 @extends('layouts.backend.master')
 @section('content')
+
+
+    <style type="text/css">
+        td.myrow {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+
+
     <div class="app-main" id="main">
         <!-- begin container-fluid -->
         <div class="container-fluid">
@@ -59,7 +72,7 @@
                                         <tr>
                                             <td>{{$items->id}}</td>
                                             <td>{{$items->title}}</td>
-                                            <td>{{$items->paragraph}}</td>
+                                            <td class="myrow">{{$items->paragraph}}</td>
 
 
                                             <td>
@@ -83,7 +96,15 @@
         </div>
         <!-- end container-fluid -->
     </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $("td.myrow").mouseenter(function() {
+                $(this).attr("title", $(this).html());
+            });
 
+        });
+    </script>
 @endsection
 
 {{--<script>--}}

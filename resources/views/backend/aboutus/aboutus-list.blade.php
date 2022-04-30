@@ -4,7 +4,15 @@
 
 
 
+    <style type="text/css">
+        td.myrow {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
+    </style>
 
 <div class="app-main" id="main">
     <!-- begin container-fluid -->
@@ -53,10 +61,10 @@
 
                                 @foreach($Aboutus as $items)
                                     <tr>
-                                        <td>{{$items->id}}</td>
-                                        <td>{{$items->questions}}</td>
+                                        <td class="mrow">{{$items->id}}</td>
+                                        <td class="myrow">{{$items->questions}}</td>
 {{--                                        <td>{{$items->answers}}</td>--}}
-                                        <td>{{$items->answers}}</td>
+                                        <td class="myrow">{{$items->answers}}</td>
 
                                         <td>
                                             <a href="{{route('delete-aboutus',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Delete" class="ti ti-trash text-danger"> </a>
@@ -80,51 +88,30 @@
     <!-- end container-fluid -->
 </div>
 
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $("td.myrow").mouseenter(function() {
+                $(this).attr("title", $(this).html());
+            });
+       
+        });
+    </script>
 @endsection
 
-{{--<script>--}}
-{{--    $(function() {--}}
-{{--        $('.toggle-class').change(function() {--}}
-{{--            var status = $(this).prop('checked') === true ? 1 : 0;--}}
-{{--            var id = $(this).data('id');--}}
-{{--            console.log(status);--}}
-{{--            $.ajax({--}}
-{{--                type: "GET",--}}
-{{--                dataType: "json",--}}
-{{--                url: '/userChangeStatus',--}}
-{{--                data: {'status': status, 'id': id},--}}
-{{--                success: function(data){--}}
-{{--                    console.log(data.success)--}}
-{{--                }--}}
-{{--            });--}}
-{{--        })--}}
-{{--    })--}}
+{{--@section('aboutustable')--}}
+{{--<script type="text/javascript"--}}
+{{--            src="'https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js')}}">--}}
+{{--    $('#aboutustable').DataTable( {--}}
+{{--        columnDefs: [ {--}}
+{{--            targets: 0,--}}
+{{--            render: function ( data, type, row ) {--}}
+{{--                return data.substr( 0, 20 );--}}
+{{--            }--}}
+{{--        } ]--}}
+{{--    } );--}}
 {{--</script>--}}
 
+{{--@endsection--}}
 
 
-
-
-
-
-
-{{--<label class="toggle-switch">--}}
-{{--                                                <input type="checkbox" id="status" class="checkbox checkbox_list" data-id="{{ $items->id }}" value="{{ ($items->status == 1) ? 0 : 1 }}" data-url="{{route('status-user',$items->id)}}" name="status" {{ ($items->status == 1) ? 'checked' : '' }}>--}}
-{{--                                                <span class="switch-btn"></span>--}}
-{{--                                            </label>--}}
-{{--                                            <span style="display: none">{{ ($items->status == 1) ? 'Active' : 'false' }}</span>--}}
-{{--                                        </td>--}}
-
-{{--<script>--}}
-{{--$('#inputStateRes').on('change', function () {--}}
-{{--if (this.value == 'Active') {--}}
-{{--$(".dataTable").DataTable().column(4).search('Active').draw();--}}
-{{--} else if (this.value == 'InActive') {--}}
-{{--$(".dataTable").DataTable().column(4).search('false').draw();--}}
-{{--} else if (this.value == 'All') {--}}
-{{--$(".dataTable").DataTable().column(4).search('').draw();--}}
-{{--} else {--}}
-{{--$(".datatable").DataTable().search(this.value).draw();--}}
-{{--}--}}
-{{--});--}}
-{{--</script>--}}

@@ -2,6 +2,25 @@
 
 
 @section('content')
+
+    <style type="text/css">
+        td.myrow {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th.therow {
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+
+
+
     <div class="app-main" id="main">
         <!-- begin container-fluid -->
         <div class="container-fluid">
@@ -55,8 +74,8 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Industry</th>
-                                    <th>Date of Data Breach</th>
-                                    <th>Number of Leaked Accounts</th>
+                                    <th class="therow">Date of Data Breach</th>
+                                    <th class="therow">Number of Leaked Accounts</th>
                                     <th>Website</th>
                                     <th>Details</th>
                                     <th>Action</th>
@@ -67,12 +86,12 @@
                                         {{--                                        {{dd($show)}}--}}
                                         <tr>
                                             <td>{{$items->id}}</td>
-                                            <td>{{$items->name}}</td>
-                                            <td>{{$items->industry}}</td>
-                                            <td>{{$items->date_of_data_breach}}</td>
-                                            <td>{{$items->number_of_leaked_accounts}}</td>
-                                            <td>{{$items->website}}</td>
-                                            <td>{{$items->detail}}</td>
+                                            <td >{{$items->name}}</td>
+                                            <td class="myrow">{{$items->industry}}</td>
+                                            <td class="myrow">{{$items->date_of_data_breach}}</td>
+                                            <td class="myrow">{{$items->number_of_leaked_accounts}}</td>
+                                            <td class="myrow">{{$items->website}}</td>
+                                            <td class="myrow">{{$items->detail}}</td>
                                             <td>
                                                 <a href="{{route('delete-company',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Delete" class="ti ti-trash text-danger"> </a>
                                                 <a href="{{route('edit-company',$items->id)}}" data-toggle="tooltip" data-placement="top" title="Edit" class="ti ti-pencil text-primary"> </a>
@@ -90,6 +109,21 @@
         </div>
         <!-- end container-fluid -->
     </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            $("td.myrow").mouseenter(function() {
+                $(this).attr("title", $(this).html());
+            });
+
+        });
+        $(function() {
+            $("th.therow").mouseenter(function() {
+                $(this).attr("title", $(this).html());
+            });
+
+        });
+    </script>
 
 
 
