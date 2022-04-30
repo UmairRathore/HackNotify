@@ -1,6 +1,4 @@
 
-<script src="{{asset('backend/assets/js/app.js')}}"></script>
-
 <!-- plugins -->
 
 <script src="{{asset('backend/assets/js/vendors.js')}}"></script>
