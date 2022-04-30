@@ -374,6 +374,9 @@
                             $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
                         } else {
+                            $('#enter_correct_otp').hide();
+                            $('#verify_otp_message').hide();
+                            $(".badNewsContainerEmail").addClass('d-none');
                             $(".noLeakContainer").removeClass('d-none');
                         }
                         // document.getElementById("msg").innerHTML = result;
