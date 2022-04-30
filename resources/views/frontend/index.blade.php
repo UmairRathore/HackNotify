@@ -355,7 +355,7 @@
                         otp_pin: otp_pin,
                     },
                     success: function (result) {
-                        if (result.status == true) {
+                        if (result.status == true && result.message == "found") {
                             $("#search_type").html('phone number');
 
                             $("#email_breaches").html(result.count + ' data breaches');
@@ -368,12 +368,13 @@
                             $("#enter_correct_otp").hide();
 
 
-                        } else if(result.status == false) {
+                        } else if (result.status == false) {
                             $('#enter_correct_otp').show();
                             $('#verify_otp_message').hide();
                             $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
-
+                        } else {
+                            $(".noLeakContainer").removeClass('d-none');
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },
