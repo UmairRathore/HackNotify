@@ -84,7 +84,11 @@ class HomeController extends Controller
                 $phone = SearchBreach::where('phone', '=', $request->phone)->get();
 
                 $record = SearchBreach::with('companyData')->where('phone', '=', $request->phone)->first();
-                return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $phone->count()]);
+                if ($record) {
+                    return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $phone->count()]);
+                } else
+                    return response()->json(['status' => true, 'message' => 'Not found', 'record' => $record, 'count' => $phone->count()]);
+
             } else {
                 return response()->json(['status' => false, 'message' => 'Otp Not verified',]);
             }
