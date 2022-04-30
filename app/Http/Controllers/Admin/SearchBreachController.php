@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\CompanyImport;
-use App\Imports\SearchBreachImport;
+//use App\Imports\SearchBreachImport;
 use App\Models\Company;
 use App\Models\SearchBreach;
 use Illuminate\Http\Request;
@@ -36,18 +36,15 @@ class SearchBreachController extends Controller
 //        $this->data['searchbreach'] = $this->_model::all();
         return view($this->_viewPath . 'searchbreach-list', $this->data);
     }
-
     public function searchBreachList(Request $request)
-    {
-        $totalFilteredRecord = $totalDataRecord = $draw_val = "";
+    {$totalFilteredRecord = $totalDataRecord = $draw_val = "";
         $columns_list = array(
-            0 => 'id',
-            1 => 'company_id',
-            2 => 'phone',
-            3 => 'email',
-            4 => 'password',
-            5 => 'id',
-
+            0 =>'id',
+            1 =>'company',
+            2=> 'phone',
+            3=> 'email',
+            4=> 'password',
+            5=> 'action',
         );
 
         $totalDataRecord = SearchBreach::count();
