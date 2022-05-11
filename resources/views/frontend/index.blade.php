@@ -496,17 +496,26 @@
         // var phone = window.intlTelInput(document.querySelector("#phone"), {
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
-            separateDialCode: true,
+            separateDialCode: false,
             preferredCountries: ["in"],
             // hiddenInput: "full",
             utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
         });
 
-        $("form").submit(function () {
-            var full_number = phone.getNumber(intlTelInputUtils.numberFormat.E164);
-            $("input[name='phone']").val(full_number);
-            alert(full_number)
-
+        // $("form").submit(function () {
+        //     var full_number = phone.getNumber(intlTelInputUtils.numberFormat.E164);
+        //     $("input[name='phone']").val(full_number);
+        //     alert(full_number)
+        //
+        // });
+        $(document).ready(function() {
+            $('.iti__flag-container').click(function() {
+                var countryCode = $('.iti__selected-flag').attr('title');
+                var countryCode = countryCode.replace(/[^0-9]/g,'')
+                // var format = numberFormat.E164;
+                $('#phone').val("");
+                $('#phone').val("+"+countryCode+" "+$('#phone').val());
+            });
         });
 
     </script>
