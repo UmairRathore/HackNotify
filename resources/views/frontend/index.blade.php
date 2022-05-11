@@ -514,7 +514,7 @@
                 var countryCode = countryCode.replace(/[^0-9]/g,'')
                 // var format = numberFormat.E164;
                 $('#phone').val("");
-                $('#phone').val("+"+countryCode+" "+$('#phone').val());
+                $('#phone').val(countryCode+""+$('#phone').val());
             });
         });
 
