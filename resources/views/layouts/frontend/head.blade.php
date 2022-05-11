@@ -14,6 +14,7 @@
     <link rel="stylesheet" href={{asset('frontend/assets/css/bootstrap.min.css')}}>
     <link rel="stylesheet" href={{asset('frontend/assets/css/style.css')}}>
 
+{{--    <link rel="stylesheet" href="{{asset('frontend/assets/css/intlTelInput.css')}}">--}}
 
     <style>
 

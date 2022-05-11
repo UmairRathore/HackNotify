@@ -3,8 +3,22 @@
 @section('content')
 
     {{--    {{dd($data)}}--}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/css/intlTelInput.min.css" rel="stylesheet"/>
+    <style>
+        .iti--allow-dropdown .iti__flag-container .iti__selected-flag {
+            border-radius: 30px 0 0 30px;
+        }
 
+        .iti--separate-dial-code .iti__selected-flag {
+            border-radius: 30px 0 0 30px;
+        }
 
+        .iti{
+            margin-top: 10px !important;
+            display: flex;
+        }
+
+    </style>
     <div class="">
         <div class="inner-flex">
             <div class="main-inner-container1">
@@ -54,13 +68,8 @@
                                 <div class="tab-panel" id="tabs-profile3" role="tabpanel">
                                     <div id="phone_div">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
-                                            <input type="text" id="phone" name="phone" placeholder="Your Phone" class="mainButtonText" value="">
+                                            <input type="tel" id="phone" name="phone" class="mainButtonText">
                                             <img id="searchphoneimg" alt="searchInactive" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
-                                            {{--                                            <input type="tel" id="phone" name="phone" class="mainButtonText">--}}
-                                            {{--                                            <span id="valid-msg" class="hide">✓ Valid</span>--}}
-                                            {{--                                            <span id="error-msg" class="hide"></span>--}}
-
-
                                         </div>
                                     </div>
 
@@ -220,8 +229,9 @@
     {{--                });--}}
     {{--            </script>--}}
 
+{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--}}
     <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js')}}"></script>
-
+    <script src="{{asset('frontend/assets/js/intlTelInput.js')}}"></script>
     <script type="text/javascript">
         // $(document).ready(function(){--}}
         {{--        $("img").click(function(){--}}
@@ -436,43 +446,7 @@
         });
 
 
-        var input = document.querySelector("#phone"),
-            errorMsg = document.querySelector("#error-msg"),
-            validMsg = document.querySelector("#valid-msg");
 
-        // here, the index maps to the error code returned from getValidationError - see readme
-        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-
-        // initialise plugin
-        var iti = window.intlTelInput(input, {
-            utilsScript: "../../build/js/utils.js?1638200991544"
-        });
-
-        var reset = function () {
-            input.classList.remove("error");
-            errorMsg.innerHTML = "";
-            errorMsg.classList.add("hide");
-            validMsg.classList.add("hide");
-        };
-
-        // on blur: validate
-        input.addEventListener('blur', function () {
-            reset();
-            if (input.value.trim()) {
-                if (iti.isValidNumber()) {
-                    validMsg.classList.remove("hide");
-                } else {
-                    input.classList.add("error");
-                    var errorCode = iti.getValidationError();
-                    errorMsg.innerHTML = errorMap[errorCode];
-                    errorMsg.classList.remove("hide");
-                }
-            }
-        });
-
-        // on keyup / change flag: reset
-        input.addEventListener('change', reset);
-        input.addEventListener('keyup', reset);
 
         {{--$("#img").click(function(e) {--}}
         {{--    alert('hello');--}}
@@ -517,6 +491,22 @@
 
         {{--});--}}
 
+
+        // var phone = window.intlTelInput(document.querySelector("#phone"), {
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            separateDialCode: true,
+            preferredCountries: ["in"],
+            // hiddenInput: "full",
+            utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+        });
+
+        $("form").submit(function () {
+            var full_number = phone.getNumber(intlTelInputUtils.numberFormat.E164);
+            $("input[name='phone']").val(full_number);
+            alert(full_number)
+
+        });
 
     </script>
 @endsection
