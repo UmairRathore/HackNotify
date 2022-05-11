@@ -69,8 +69,8 @@
                                 <div class="tab-panel" id="tabs-profile3" role="tabpanel">
                                     <div id="phone_div">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
-                                            <input type="number" minlength="7"  maxlength="15"  id="phone" name="phone" class="mainButtonText">
-                                            <img id="searchphoneimg" alt="searchInactive" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
+                                            <input type="number" placeholder="Your number" minlength="7"  maxlength="15"  id="phone" name="phone" class="mainButtonText">
+                                            <img id="searchphoneimg" alt="searchInactive" onclick="stringLengthCheck(document.form1.name, 5, 15)" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
                                         </div>
                                     </div>
 
@@ -497,8 +497,9 @@
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             separateDialCode: false,
+            // numberFormat:false,
             preferredCountries: ["in"],
-            // hiddenInput: "full",
+            hiddenInput: "full",
             utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
         });
 
@@ -512,13 +513,25 @@
             $('.iti__flag-container').click(function() {
                 var countryCode = $('.iti__selected-flag').attr('title');
                 var countryCode = countryCode.replace(/[^0-9]/g,'')
-                // var full_number = phone.getNumber(intlTelInputUtils.numberFormat.E164);
-                // var format = numberFormat.E164;
                 $('#phone').val("");
-                // $('#phone').val(full_number);
-                $('#phone').val(countryCode+""+$('#phone').val());
+                $('#phone').val(+countryCode+""+$('#phone').val());
             });
-        });
+        })
+        // function stringLengthCheck(name, minlength, maxlength)
+        // {
+        //     var mnlen = minlength;
+        //     var mxlen = maxlength;
+        //
+        //     if(name.value.length<mnlen || name.value.length> mxlen)
+        //     {
+        //         alert("Number should be " +mnlen+ " to " +mxlen+ " digits.");
+        //         return false;
+        //     }
+        //     else
+        //     {
+        //         return true;
+        //     }
+        // }
 
     </script>
 @endsection
