@@ -21,7 +21,7 @@
                 <a href="#" class="has-chevron" data-bs-toggle="collapse" data-bs-target="#company" aria-expanded="false" aria-controls="company">
                     <span><i class="ti ti-list"></i>Company</span>
                 </a>
-                <ul id="company" class="collapse" aria-labelledby="company" data-bs-parent="#side-nav-accordion">
+                <ul id="company" class="dropdown-menu" aria-labelledby="company" data-bs-parent="#side-nav-accordion">
 {{--                    <li> <a href="#">Company </a> </li>--}}
                     <li> <a href="{{route('company-list')}}">Company </a> </li>
 {{--                    <li> <a href="#">Search Breach</a> </li>--}}
