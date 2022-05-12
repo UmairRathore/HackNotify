@@ -35,6 +35,7 @@ class HomeController extends Controller
     public function searchemail(Request $request)
     {
         $email = SearchBreach::where('email', '=', $request->email)->get();
+
         if ($email->count() && $request->email) {
             $record = SearchBreach::with('companyData')->where('email', '=', $request->email)->first();
             return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $email->count()]);
@@ -73,11 +74,11 @@ class HomeController extends Controller
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
             $message = "Your one time pin is $pin. Please verify your identity";
-//            $client = new Client($account_sid, $auth_token);
-//            $client->messages->create($receiverNumber, [
-//                'from' => $twilio_number,
-//                'body' => $message]);
-            return response()->json(['status' => true, 'message' => "OTP Sent Successfully.$message"]);
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create($receiverNumber, [
+                'from' => $twilio_number,
+                'body' => $message]);
+            return response()->json(['status' => true, 'message' => "OTP Sent Successfully."]);
 
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
