@@ -340,6 +340,9 @@
 
                         } else  {
                             // alert(result.message);
+                            $(".badNewsContainerPhone").addClass('d-none');
+                            $(".noLeakContainer").addClass('d-none');
+
                             $(".enter_correct_number").removeClass('d-none');
 
                         }
