@@ -15,6 +15,7 @@ use App\Models\SearchBreach;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Support\Facades\Session;
 use Twilio\Rest\Client;
 use function PHPUnit\Framework\isEmpty;
 
@@ -52,13 +53,22 @@ class HomeController extends Controller
 
 
         try {
+            $request->validate
+            ([
+                'phone' => 'required|numeric|digits_between:7,15',
+            ]);
             $pin = mt_rand(1000, 9999);
-            OtpVerification::updateOrCreate([
+            $check = OtpVerification::updateOrCreate([
                 'phone' => $request->phone,
             ], [
                 'phone' => $request->phone,
                 'otp_pin' => $pin,
             ]);
+//            if ($check) {
+//            Session::flash('message', 'This is a message!');
+//            Session::flash('alert-class', 'alert-success');
+//                /////success message
+//            }
 
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
@@ -113,7 +123,6 @@ class HomeController extends Controller
 
     public function searchpass(Request $request)
     {
-
 
 
             $password = SearchBreach::where('password', '=', $request->password)->get();

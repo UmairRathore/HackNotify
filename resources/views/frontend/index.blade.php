@@ -65,12 +65,32 @@
                                     </div>
                                 </div>
 
+{{--                                @if(Session('message'))--}}
+{{--                                    <div class="alert alert-success" role="alert">--}}
+{{--                                        {{Session('message')}}--}}
 
+{{--                                    </div>--}}
+{{--                                @endif--}}
                                 <div class="tab-panel" id="tabs-profile3" role="tabpanel">
                                     <div id="phone_div">
                                         <div class="col-sm-12 col-md-9" style="position: relative;">
-                                            <input type="number" placeholder="Your number" minlength="7"  maxlength="15"  id="phone" name="phone" class="mainButtonText">
-                                            <img id="searchphoneimg" alt="searchInactive" onclick="stringLengthCheck(document.form1.name, 5, 15)" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
+                                            <input type="tel" id="phone"  name="phone" onkeypress="return onlyNumberKey(event)" class="mainButtonText" minlength="7" maxlength="15" pattern="[0-9]"  title="Enter Numbers Only">
+                                            <img id="searchphoneimg" alt="searchInactive"  src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
+
+                                            <div class="enter_correct_number d-none" class="row col-md-9">
+                                            <span class="my-2 text-danger">
+                                                Enter Valid Phone Number.
+                                            </span>
+                                            </div>
+{{--                                            <span id="folio-invalid" class="hidden mob-helpers">--}}
+{{--			                            	<i class="fa fa-times mobile-invalid"></i>Invalid mobile No--}}
+{{--                                            </span>--}}
+{{--                                            @error('phone') is-invalid @enderror--}}
+{{--                                            @error('phone')--}}
+{{--                                            <span class="invalid-feedback" role="alert">--}}
+{{--                                                <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                                            @enderror--}}
                                         </div>
                                     </div>
 
@@ -91,6 +111,7 @@
                                                 The Otp entered is incorrect.
                                             </span>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -288,10 +309,12 @@
         $(document).ready(function () {
             $("#searchphoneimg").click(function (e) {
                 $(".badNewsContainerEmail").addClass('d-none');
+                $(".enter_correct_number").addClass('d-none');
 
                 // alert('hello');
                 let phone = document.getElementById("phone").value;
                 // alert(email);
+
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
@@ -300,6 +323,7 @@
                         "_token": "{{ csrf_token() }}",
                         phone: phone,
                     },
+
                     success: function (result) {
                         if (result.status == true) {
 
@@ -312,19 +336,38 @@
                             $("#enter_correct_otp").hide();
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
+                            $(".enter_correct_number").addClass('d-none');
 
-                        } else {
-                            alert(result.message);
-
+                        } else  {
+                            // alert(result.message);
+                            $(".enter_correct_number").removeClass('d-none');
 
                         }
                         // document.getElementById("msg").innerHTML = result;
                     },
                     error: function (result) {
                         alert('error');
+
+                        $(".enter_correct_number").addClass('d-none');
+
+
+                        // $(".enter_correct_number").removeClass('d-none');
+
+                        // function validatePhone(#searchphoneimg) {
+                        //     var a = document.getElementById(#searchphoneimg).value;
+                        //     var filter = /[1-9]{1}[0-9]{9}/;
+                        //     if (filter.test(a)) {
+                        //         return true;
+                        //     }
+                        //     else {
+                        //         return false;
+                        //     }
+                        // }
                     }
+
                 });
             });
+
 
             {{--$("#getVerificationCode").click(function (e) {--}}
             {{--    // alert('hello');--}}
@@ -381,14 +424,18 @@
                             $('.noLeakContainer').addClass('d-none');
                             $('#verify_otp_message').hide();
                             $("#enter_correct_otp").hide();
+                            $(".enter_correct_number").addClass('d-none');
 
 
                         } else if (result.status == false) {
+                            $(".enter_correct_number").addClass('d-none');
                             $('#enter_correct_otp').show();
                             $('#verify_otp_message').hide();
                             $('.noLeakContainer').addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
+
                         } else {
+                            $(".enter_correct_number").addClass('d-none');
                             $('#enter_correct_otp').hide();
                             $('#verify_otp_message').hide();
                             $(".badNewsContainerEmail").addClass('d-none');
@@ -428,13 +475,15 @@
                             // $("#email_company").html(result.record.company_data.name);
                             // $("#email_website").html(result.record.company_data.website);
                             // $("#email_detail").html(result.record.company_data.detail);
+                            // $(".enter_correct_number").addClass('d-none');
                             $(".badNewsContainerpassword").removeClass('d-none');
                             $(".badNewsContainerEmail").hide();
                             $('.noLeakContainer').addClass('d-none');
 
+
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
-                            $(".badNewsContainerpassword").addclass('d-none');
+                            $(".badNewsContainerpassword").addClass('d-none');
                             $(".badNewsContainerEmail").hide();
                         }
 
@@ -536,6 +585,14 @@
         //         return true;
         //     }
         // }
+        function onlyNumberKey(evt) {
+
+            // Only ASCII character in that range allowed
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
 
     </script>
 @endsection
