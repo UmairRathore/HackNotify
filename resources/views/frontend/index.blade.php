@@ -143,6 +143,9 @@
         <!--        //bad news container according to api response hidden for now-->
         <div class="row">
             <div class="col-md-6">
+                <div class="loadercontainer d-none">
+                    <img class="loaderimage" src="{{asset('/images/1494.gif')}}" alt="loader">
+                </div>
                 <div class="badNewsContainer badNewsContainerEmail d-none">
                     <div class="row">
                         <div class="mr-1"><img src="{{ asset('frontend/assets/images/badnews.ca3d9507.svg')}}" alt="badnews"></div>
@@ -271,6 +274,8 @@
                 // alert('hello');
                 let email = document.getElementById("email").value;
                 // alert(email);
+                $(".loadercontainer").removeClass('d-none');
+
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
@@ -280,6 +285,7 @@
 
                         email: email, // < note use of 'this' here
                         // access_token: $("#access_token").val()
+
                     },
                     success: function (result) {
 
@@ -290,11 +296,15 @@
                             $("#email_website").html(result.record.company_data.website);
                             $("#email_detail").html(result.record.company_data.detail);
                             $(".badNewsContainerEmail").removeClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
+
                             $('.noLeakContainer').addClass('d-none');
 
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
+
                         }
 
                     },
@@ -314,6 +324,7 @@
                 // alert('hello');
                 let phone = document.getElementById("phone").value;
                 // alert(email);
+                $(".loadercontainer").removeClass('d-none');
 
                 e.preventDefault();
                 $.ajax({
@@ -336,13 +347,14 @@
                             $("#enter_correct_otp").hide();
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
                             $(".enter_correct_number").addClass('d-none');
 
                         } else  {
                             // alert(result.message);
                             $(".badNewsContainerPhone").addClass('d-none');
                             $(".noLeakContainer").addClass('d-none');
-
+                            $(".loadercontainer").addClass('d-none');
                             $(".enter_correct_number").removeClass('d-none');
 
                         }
@@ -405,6 +417,8 @@
                 $(".badNewsContainerEmail").addClass('d-none');
                 let phone = document.getElementById("phone").value;
                 let otp_pin = document.getElementById("otp_pin").value;
+                $(".loadercontainer").removeClass('d-none');
+
                 // alert(email);
                 e.preventDefault();
                 $.ajax({
@@ -427,6 +441,7 @@
                             $('.noLeakContainer').addClass('d-none');
                             $('#verify_otp_message').hide();
                             $("#enter_correct_otp").hide();
+                            $(".loadercontainer").addClass('d-none');
                             $(".enter_correct_number").addClass('d-none');
 
 
@@ -435,6 +450,7 @@
                             $('#enter_correct_otp').show();
                             $('#verify_otp_message').hide();
                             $('.noLeakContainer').addClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
                             $(".badNewsContainerEmail").addClass('d-none');
 
                         } else {
@@ -442,6 +458,7 @@
                             $('#enter_correct_otp').hide();
                             $('#verify_otp_message').hide();
                             $(".badNewsContainerEmail").addClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
                             $(".noLeakContainer").removeClass('d-none');
                         }
                         // document.getElementById("msg").innerHTML = result;
@@ -460,6 +477,8 @@
                 // alert('hello');
                 let password = document.getElementById("password").value;
                 // alert(email);
+                $(".loadercontainer").removeClass('d-none');
+
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
@@ -481,11 +500,13 @@
                             // $(".enter_correct_number").addClass('d-none');
                             $(".badNewsContainerpassword").removeClass('d-none');
                             $(".badNewsContainerEmail").hide();
+                            $(".loadercontainer").addClass('d-none');
                             $('.noLeakContainer').addClass('d-none');
 
 
                         } else {
                             $('.noLeakContainer').removeClass('d-none');
+                            $(".loadercontainer").addClass('d-none');
                             $(".badNewsContainerpassword").addClass('d-none');
                             $(".badNewsContainerEmail").hide();
                         }
