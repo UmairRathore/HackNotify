@@ -37,6 +37,7 @@
                 {{--                <div class="main-inner-container1-para1">Last year alone, billions of&nbsp;accounts were</div>--}}
                 {{--                <div class="main-inner-container1-para1">hacked and the number will only Increase.</div>--}}
 
+
                 <div class="main-inner-container1 col-md-12 col-sm-12 mt-4">
 
                     <div class="mainButtonsContainer mt-0">
@@ -62,8 +63,10 @@
                                             <img id="searchemailimg" alt="searchInactive" src={{asset('frontend/assets/images/searchInactive.b5847a06.svg')}} class="mainContainerImage">
                                             {{--                                            <button id="img">Button</button>--}}
                                         </div>
+
                                     </div>
                                 </div>
+
 
 {{--                                @if(Session('message'))--}}
 {{--                                    <div class="alert alert-success" role="alert">--}}
@@ -143,8 +146,8 @@
         <!--        //bad news container according to api response hidden for now-->
         <div class="row">
             <div class="col-md-6">
-                <div class="loadercontainer d-none">
-                    <img class="loaderimage" src="{{asset('/images/1494.gif')}}" alt="loader">
+                <div class="loadercontainer d-none text-center">
+                    <img class="loaderimage" src="{{asset('/images/1484.gif')}}" alt="loader">
                 </div>
                 <div class="badNewsContainer badNewsContainerEmail d-none">
                     <div class="row">
@@ -274,6 +277,7 @@
                 // alert('hello');
                 let email = document.getElementById("email").value;
                 // alert(email);
+                $('.noLeakContainer').addClass('d-none');
                 $(".loadercontainer").removeClass('d-none');
 
                 e.preventDefault();
@@ -324,6 +328,7 @@
                 // alert('hello');
                 let phone = document.getElementById("phone").value;
                 // alert(email);
+                $('.noLeakContainer').addClass('d-none');
                 $(".loadercontainer").removeClass('d-none');
 
                 e.preventDefault();
@@ -477,6 +482,7 @@
                 // alert('hello');
                 let password = document.getElementById("password").value;
                 // alert(email);
+                $('.noLeakContainer').addClass('d-none');
                 $(".loadercontainer").removeClass('d-none');
 
                 e.preventDefault();

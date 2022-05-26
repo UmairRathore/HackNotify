@@ -70,15 +70,22 @@ class HomeController extends Controller
 //                /////success message
 //            }
 
+
+//        --->    for twilio otp --> Remove "$message from response and uncomment line 79(after $message="") to 82(before reponse)
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");
             $message = "Your one time pin is $pin. Please verify your identity";
-            $client = new Client($account_sid, $auth_token);
-            $client->messages->create($receiverNumber, [
-                'from' => $twilio_number,
-                'body' => $message]);
-            return response()->json(['status' => true, 'message' => "OTP Sent Successfully."]);
+//            --->(Uncomment to for twilio otp) AND (Comment to use local)
+//
+//            $client = new Client($account_sid, $auth_token);
+//            $client->messages->create($receiverNumber, [
+//                'from' => $twilio_number,
+//                'body' => $message]);
+
+//            (Uncomment for twilio otp)  AND (Comment to use local)<---
+            return response()->json(['status' => true, 'message' => "OTP Sent Successfully.$message"]);
+// --->     use this for twilio else above line      return response()->json(['status' => true, 'message' => "OTP Sent Successfully."]);
 
         } catch (Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -125,14 +132,14 @@ class HomeController extends Controller
     {
 
 
-            $password = SearchBreach::where('password', '=', $request->password)->get();
+        $password = SearchBreach::where('password', '=', $request->password)->get();
 
-            if ($password->count() && $request->password) {
-                $record = SearchBreach::with('companyData')->where('password', '=', $request->password)->first();
-                return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $password->count()]);
-            } else {
-                return response()->json(['status' => false, 'message' => 'Not found']);
-            }
+        if ($password->count() && $request->password) {
+            $record = SearchBreach::with('companyData')->where('password', '=', $request->password)->first();
+            return response()->json(['status' => true, 'message' => 'found', 'record' => $record, 'count' => $password->count()]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Not found']);
+        }
 
 
 
