@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Admin\IndianBloodDonorsController;
 use App\Http\Controllers\Controller;
+use App\Mail\SubscriberMail;
 use App\Models\Cards;
 use App\Models\Company;
 use App\Models\Footer;
@@ -141,7 +142,18 @@ class HomeController extends Controller
             return response()->json(['status' => false, 'message' => 'Not found']);
         }
 
+    }
 
+
+    public function subscribe(Request $request)
+    {
+        $input = $request->all();
+
+        $email = $input['email'];
+
+        $message = "You Subscribed";
+
+        \Mail::to($email)->send(new SubscriberMail($message));
 
     }
 }
